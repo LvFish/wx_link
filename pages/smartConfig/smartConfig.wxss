@@ -1,0 +1,21 @@
+.container {
+  padding: 20px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+button {
+  margin-top: 20px;
+}
+
+.result {
+  margin-top: 20px;
+  color: red;
+}

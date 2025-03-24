@@ -1,0 +1,17 @@
+<!--pages/smartConfig/smartConfig.wxml-->
+<view class="container">
+  <view class="input-group">
+    <label>选择 Wi-Fi：</label>
+    <picker mode="selector" range="{{wifiList}}" range-key="SSID" bindchange="onWifiChange" value="{{selectedWifiIndex}}">
+      <view class="picker">
+        {{selectedWifi ? selectedWifi.SSID : '请选择 Wi-Fi'}}
+      </view>
+    </picker>
+  </view>
+  <view class="input-group">
+    <label>Wi-Fi 密码：</label>
+    <input type="password" placeholder="请输入 Wi-Fi 密码" bindinput="onPasswordInput" />
+  </view>
+  <button bindtap="startSmartConfig">开始配网</button>
+  <view class="result">{{result}}</view>
+</view>

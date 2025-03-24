@@ -1,0 +1,35 @@
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* 左对齐，若需居中改为center */
+  padding: 20rpx;
+  gap: 20rpx; /* 按钮间距 */
+  margin-top: 50px;
+}
+
+/* 固定按钮长度，每行3个 */
+.custom-btn {
+  width: calc(33.33% - 20rpx); /* 总宽度扣除两侧间距 */
+  height: 80rpx;
+  min-width: 200rpx; /* 固定最小长度（可选） */
+  background-color: #007bff;
+  color: white;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  line-height: 80rpx; /* 垂直居中 */
+  padding: 0;
+  margin: 0;
+}
+
+.custom-btn2 {
+  width: calc(33.33% - 20rpx); /* 总宽度扣除两侧间距 */
+  height: 80rpx;
+  min-width: 200rpx; /* 固定最小长度（可选） */
+  background-color: gray;
+  color: white;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  line-height: 80rpx; /* 垂直居中 */
+  padding: 0;
+  margin: 0;
+}

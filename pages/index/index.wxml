@@ -1,0 +1,20 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 标题 -->
+  <view class="title_container">
+    <view class="title">设备</view>
+    <view class="add-icon" bindtap="addDevice"></view>
+  </view>
+  <!-- 设备列表 -->
+  <view wx:for="{{deviceList}}" wx:key="deviceId" class="device-item">
+    <!-- 设备名称 -->
+    <view class="device-name">{{item.name}}</view>
+    <!-- 设备状态 -->
+    <!-- <view class="device-status">{{item.status}}</view> -->
+    <!-- 设备操作按钮 -->
+    <view class="device-actions">
+      <button bindtap="editDevice" data-id="{{item.deviceId}}" class="action-btn">查看</button>
+      <button bindtap="handleDelete" data-id="{{item.deviceId}}" class="action-btn">删除</button>
+    </view>
+  </view>
+</view>

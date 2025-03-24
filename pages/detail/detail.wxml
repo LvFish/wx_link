@@ -1,0 +1,10 @@
+<!--pages/detail/detail.wxml-->
+
+
+
+<view class="button-container">
+  <!-- 循环渲染按钮 -->
+  <block wx:for="{{buttonList}}" wx:key="index">
+    <button bindtap="clickButton" data-id="{{item.id}}" class="custom-btn">{{item.name}}</button>
+  </block>
+</view>
