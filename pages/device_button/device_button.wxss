@@ -1,0 +1,11 @@
+.button-container {
+  display: flex;
+  flex-wrap: wrap; /* 允许换行 */
+  justify-content: space-between; /* 子元素在水平方向分散排列 */
+}
+
+.button-item {
+  width: 30%; /* 每个按钮占容器宽度的30%，可根据实际情况调整 */
+  margin-bottom: 10px; /* 按钮之间的垂直间距 */
+  background-color: rgb(100, 237, 130);
+}

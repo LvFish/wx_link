@@ -1,6 +1,6 @@
 {
   "navigationBarBackgroundColor": "#00b1b5",
-  "navigationBarTitleText": "设备列表",
+  "navigationBarTitleText": "玩具列表",
   "usingComponents": {
       "modal": "/components/modal/modal",
       "e-base-button": "/components/base-button/base-button",

@@ -1,0 +1,15 @@
+<view class="container">
+    <view class="ruff-header">
+        <!-- <image class="header-bg" src="" mode="widthFix"></image> -->
+        <view class="ruff-info">
+          <view>
+            <button class="ruff-avatar-button" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+              <image class="ruff-avatar" src="{{avatarUrl}}"></image>
+            </button>   
+          </view>
+          
+          <input type="nickname" class="weui-input" placeholder="请输入昵称" bindinput="bindKeyInput" bindblur="bindKeyBlur" value="{{nickName}}"/>
+          <button class="register-button" bindtap="register">注册</button>
+        </view>
+    </view>
+</view>

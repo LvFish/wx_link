@@ -1,0 +1,15 @@
+<!-- index.wxml -->
+<view class="container">
+    <view class="ruff-header">
+        <!-- <image class="header-bg" src="" mode="widthFix"></image> -->
+        <view class="ruff-info">
+          <view>
+            <button class="ruff-avatar-button" >
+              <image class="ruff-avatar" src="{{avatarUrl}}"></image>
+            </button>   
+          </view>
+          
+          <input type="nickname" class="weui-input" value="{{userNickName}}" disabled="true"/>
+        </view>
+    </view>
+</view>

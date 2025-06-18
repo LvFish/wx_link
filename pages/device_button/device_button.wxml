@@ -1,0 +1,3 @@
+<view class="button-container">
+  <button wx:for="{{list}}" wx:key="index" class="button-item"bindtap="onListClick" data-id="{{item.id}}" data-index="{{index}}">{{item.name}}</button>
+</view>

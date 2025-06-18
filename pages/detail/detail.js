@@ -8,7 +8,7 @@ Page({
 
   getButtonList: function(e) {
     console.log(e)
-    const url = `http://8.130.106.15:8080/device/${e}/button/list`
+    const url = `http://localhost:8080/device/${e}/button/list`
     wx.request({
       url: url,
       method: 'GET',

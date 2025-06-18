@@ -1,0 +1,27 @@
+<!--pages/test_sc2/test_sc2.wxml-->
+<!--index.wxml-->
+<button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+  <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+</button>
+
+<view class="wifiinfo-wrapper">
+  <text class="wifiinfo-label">SSID</text>
+  <input type="text" class="wifiinfo-input" placeholder="请输入SSID" bind:change="onInputWifiSSID"  />
+</view>
+
+<view class="wifiinfo-wrapper">
+  <text class="wifiinfo-label">PassWord</text>
+  <input type="text" class="wifiinfo-input" placeholder="请输入PassWord" bind:change="onInputWifiPassWord" />
+</view>
+
+<view class="mask {{isWaiting ? 'mask-show' : 'mask-hidden'}}"></view>
+<button class="normal-state" bindtap="send">{{isWaiting?"等待中...":"确认"}}</button>
+<view class="spinner-container {{isWaiting ? 'spinner-show' : 'spinner-hidden'}}">
+  <view class="spinner"></view>
+</view>
+
+<modal wx:if="{{errorMessage}}" title="错误" content="{{errorMessage}}" show="{{modalShown}}" bind:confirm="handleModalClose">
+  <view class="modal-content">
+    {{errorMessage}}
+  </view>
+</modal>
