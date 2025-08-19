@@ -1,0 +1,19 @@
+<!--components/nickname/nickname-update.wxml-->
+<view class="mask {{show ? 'show' : ''}}" bindtap="onMaskTap"></view>
+<view class="popup {{show ? 'show' : ''}}">
+  <view class="header">
+    <text class="title">{{title}}</text>
+  </view>
+  <view class="content">
+    <input 
+      class="input" 
+      placeholder="{{placeholder}}" 
+      value="{{nickname}}"
+      bindinput="onNicknameInput"
+    />
+  </view>
+  <view class="footer">
+    <view class="btn cancel" bindtap="onCancel">取消</view>
+    <view class="btn confirm" bindtap="onConfirm">确定</view>
+  </view>
+</view>

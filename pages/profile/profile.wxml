@@ -1,15 +1,93 @@
-<!-- index.wxml -->
 <view class="container">
-    <view class="ruff-header">
-        <!-- <image class="header-bg" src="" mode="widthFix"></image> -->
-        <view class="ruff-info">
-          <view>
-            <button class="ruff-avatar-button" >
-              <image class="ruff-avatar" src="{{avatarUrl}}"></image>
-            </button>   
-          </view>
-          
-          <input type="nickname" class="weui-input" value="{{userNickName}}" disabled="true"/>
-        </view>
+  <!-- 个人中心头部 -->
+  <view class="profile-header">
+    <view class="user-info">
+      <view class="avatar-container" bindtap="onTapAvatar">
+        <image class="avatar" src="{{avatarUrl || 'https://pic.imgdb.cn/item/64367f2c0d2dde5777557749.png'}}" mode="aspectFill"></image>
+      </view>
+      <view class="user-detail" bindtap="onTapAvatar">
+        <view class="nickname">{{userNickName || '点击登陆'}}</view>
+      </view>
+      <view class="right-arrow" wx:if="{{userNickName}}">
+        <image src="/images/ic_arrow_right.png" mode="aspectFit"></image>
+      </view>
     </view>
+  </view>
+
+
+  <!-- 功能按钮区域 -->
+  <view class="function-buttons">
+    <view class="button-group">
+      <view class="function-button" bindtap="goToFamily">
+        <view class="button-icon">
+          <image src="/images/ic_family.png" mode="aspectFit"></image>
+        </view>
+        <view class="button-text">家庭管理</view>
+        <view class="button-arrow">
+          <image src="/images/ic_arrow_right.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="function-buttons">
+    <view class="button-group">
+      <view class="function-button" bindtap="goToFamily">
+        <view class="button-icon">
+          <image src="/images/ic_family.png" mode="aspectFit"></image>
+        </view>
+        <view class="button-text">功能A</view>
+        <view class="button-arrow">
+          <image src="/images/ic_arrow_right.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+
+    <view class="button-group">
+      <view class="function-button" bindtap="goToMessage">
+        <view class="button-icon">
+          <image src="/images/ic_message.png" mode="aspectFit"></image>
+        </view>
+        <view class="button-text">功能B</view>
+        <view class="button-arrow">
+          <image src="/images/ic_arrow_right.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+
+  <!-- 快捷功能区域 -->
+  <!-- <view class="quick-functions">
+    <view class="section-title">快捷功能</view>
+    <view class="function-grid">
+      <view class="function-item" bindtap="goToSettings">
+        <view class="function-icon">
+          <image src="/images/ic_settings.png" mode="aspectFit"></image>
+        </view>
+        <view class="function-text">设置</view>
+      </view>
+      
+      <view class="function-item" bindtap="goToFavorites">
+        <view class="function-icon">
+          <image src="/images/ic_favorites.png" mode="aspectFit"></image>
+        </view>
+        <view class="function-text">收藏</view>
+      </view>
+      
+      <view class="function-item" bindtap="goToOrder">
+        <view class="function-icon">
+          <image src="/images/ic_order.png" mode="aspectFit"></image>
+        </view>
+        <view class="function-text">订单</view>
+      </view>
+      
+      <view class="function-item" bindtap="goToProfile">
+        <view class="function-icon">
+          <image src="/images/ic_profile.png" mode="aspectFit"></image>
+        </view>
+        <view class="function-text">资料</view>
+      </view>
+    </view>
+  </view> -->
 </view>

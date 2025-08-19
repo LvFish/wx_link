@@ -1,3 +1,43 @@
-<view class="button-container">
-  <button wx:for="{{list}}" wx:key="index" class="button-item"bindtap="onListClick" data-id="{{item.id}}" data-index="{{index}}">{{item.name}}</button>
+<view class="remote-container">
+   <!-- 屏幕区域 -->
+   <view class="screen"></view>
+
+
+   
+  <!-- 方向按键区域 -->
+  <view class="buttons-container">
+
+    <view class="row row-middle">
+      <view class="btn2 module" bindtap="handleModule">
+        <button>模式</button>
+      </view>
+      <view class="btn2 light" bindtap="handleLight">
+        <button>灯光</button>
+      </view>
+    </view>
+
+    <!-- 第一行：上按钮（居中） -->
+    <view class="row row-top">
+      <view class="btn up" bindtap="handleUp">
+        <image src="/images/up.png"></image>
+      </view>
+    </view>
+    
+    <!-- 第二行：左右按钮（居左和居右） -->
+    <view class="row row-middle">
+      <view class="btn left" bindtap="handleLeft">
+        <image src="/images/left.png"></image>
+      </view>
+      <view class="btn right" bindtap="handleRight">
+        <image src="/images/right.png"></image>
+      </view>
+    </view>
+    
+    <!-- 第三行：下按钮（居中） -->
+    <view class="row row-bottom">
+      <view class="btn down" bindtap="handleDown">
+        <image src="/images/down.png"></image>
+      </view>
+    </view>
+  </view>
 </view>

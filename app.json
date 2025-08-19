@@ -1,14 +1,15 @@
 {
   "pages": [
+    "pages/new_device/new_device",
+    "pages/profile/profile",
+    "pages/setting/setting",
+    "pages/smartConfig/smartConfig",
     "pages/home/home",
     "pages/device_list/index",
-    "pages/smartConfig/smartConfig",
     "pages/detail/detail",
-    "pages/profile/profile",
     "pages/register/register",
     "pages/device_detail/detail",
-    "pages/device_button/device_button",
-    "pages/test_sc2/test_sc2"
+    "pages/device_button/device_button"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -23,16 +24,10 @@
     "borderStyle": "black",
     "list": [
       {
-        "pagePath": "pages/home/home",
+        "pagePath": "pages/new_device/new_device",
         "iconPath": "./images/rocket-icon.png",
         "selectedIconPath": "./images/rocket-icon-light.png",
         "text": "首页"
-      },
-      {
-        "pagePath": "pages/device_list/index",
-        "iconPath": "./images/device-icon.png",
-        "selectedIconPath": "./images/device-icon-light.png",
-        "text": "设备"
       },
       {
         "pagePath": "pages/profile/profile",

@@ -1,63 +1,61 @@
 const app = getApp()
-const defaultAvatarUrl = `${app.globalData.baseUrl}/images/a6c71f73-4fbf-4ee9-b453-2ff1658625d4.jpg`
+const defaultAvatarUrl = `https://pic.imgdb.cn/item/64367f2c0d2dde5777557749.png`
 
 
 Page({
     data: {
-        motto: '软件定义硬件',
-        avatarUrl: defaultAvatarUrl,
-        userNickName:""
+        avatarUrl: null,
+        userNickName: null
+    },
+    onShow:function() { 
+      console.log('onShow', app.globalData.userInfo)
+      if (app.globalData.userInfo) {
+        let that = this;
+        let avatarUrl
+        if (app.globalData.userInfo.avatarUrl == "/f9f6f665-1e4c-44e7-9634-5bbde432ad6e.jpg" && app.globalData.userInfo.nickName == '默认用户') {
+          avatarUrl = defaultAvatarUrl
+        } else {
+          avatarUrl = `${app.globalData.baseUrl}/images${app.globalData.userInfo.avatarUrl}`
+        }
+        that.setData({
+            avatarUrl: avatarUrl,
+            userNickName: app.globalData.userInfo.nickName,
+        })
+      }
     },
     onLoad: function() {
-      console.log('app.globalData')
-      console.log(app.globalData)
+      console.log('onLoad')
+      console.log('global data', app.globalData)
+      console.log('init info isLogin', app.globalData.isLogin)
+      console.log('init info userInfo', app.globalData.userInfo)
       const that = this;
+      
       // 第一步 登陆 or 注册
 
       if (app.globalData.isLogin) {
-        that.setData({
-              avatarUrl: app.globalData.userInfo.avatarUrl,
-              userNickName: app.globalData.userInfo.nickName,
-          })
-          if (app.globalData.userInfo.avatarUrl) {
-            this.setData({
-              avatarUrl: `${app.globalData.baseUrl}/images${app.globalData.userInfo.avatarUrl}`,
-            })
-          }
+        console.log('init info')
+        let avatarUrl
+        if (app.globalData.userInfo.avatarUrl == "/f9f6f665-1e4c-44e7-9634-5bbde432ad6e.jpg" && app.globalData.userInfo.nickName == '默认用户') {
+          avatarUrl = defaultAvatarUrl
         } else {
-          that.startLogin()
+          avatarUrl = `${app.globalData.baseUrl}/images${app.globalData.userInfo.avatarUrl}`
         }
-    },
-    onChooseAvatar(e) {
-      const {
-        avatarUrl
-      } = e.detail
-      this.setData({
-        avatarUrl,
-      })
-      console.log(avatarUrl, "avatarUrl");
-      this.base64(avatarUrl, "png").then(res => {
-        console.log(res, 'base64路径') //res是base64路径
-        //todo 异步保存到服务器并返回服务器图片地址
-        var url = `${app.globalData.baseUrl}/image/${app.globalData.userInfo.openid}/upload`
-        wx.request({
-          url: url,
-          data: res,
-          method: 'POST',
-          header: {
-            'content-type': 'text/plain' // 设置请求头为 text/plain，表示发送纯文本数据
-          },
-          success: function (res) {
-            console.log('请求成功', res.data);
-            // 在这里处理请求成功后的逻辑，例如更新页面数据等
-          },
-          fail: function (err) {
-            console.log('请求失败', err);
-            // 处理请求失败的情况，比如提示用户错误信息
-          }
+        that.setData({
+            avatarUrl: avatarUrl,
+            userNickName: app.globalData.userInfo.nickName,
         })
-      })
-      console.log(avatarUrl, '1');
+      }
+    },
+     // 点击头像或昵称
+    onTapAvatar() {
+      if (!this.data.userNickName) {
+        this.startLogin();
+      } else {
+        console.log('start click user info todo jump')
+        wx.navigateTo({
+          url: '/pages/setting/setting',
+        })
+      }
     },
     startLogin() {
       const that = this;
@@ -137,28 +135,5 @@ Page({
             }
         }
       });
-    },
-    saveInputValue(e) {
-      console.log(e)
-      console.log("nickName:",this.data.userNickName)
-    },
-    // 图片转64代码
-    base64(url, type) {
-      return new Promise((resolve, reject) => {
-        wx.getFileSystemManager().readFile({
-          filePath: url, //选择图片返回的相对路径
-          encoding: 'base64', //编码格式
-          success: res => {
-            // resolve('data:image/' + type.toLocaleLowerCase() + ';base64,' + res.data)
-            resolve(res.data)
-            if (r.data.code == 200) {
-              this.setData({
-                avatarUrl:`${app.globalData.baseUrl}/images${res.data.data}`,
-              })
-            }
-          },
-          fail: res => reject(res.errMsg)
-        })
-      })
     },
 });

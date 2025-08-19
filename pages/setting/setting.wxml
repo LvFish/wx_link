@@ -1,0 +1,37 @@
+<!--pages/setting/setting.wxml-->
+<view class="container">
+  <!-- 上方空白区域，可根据需求调整高度 -->
+  <!-- Wi-Fi 名称输入框 -->
+  <view class="function-buttons">
+    <view class="button-group">
+      <view class="function-button" >
+        <view class="button-text">头像</view>
+        <button class="button-image" bind:chooseavatar="onChooseAvatar" open-type="chooseAvatar">
+          <image class="avator" src="{{avatarUrl}}" mode="aspectFit"></image>
+        </button>
+        <view class="button-arrow" >
+          <image src="/images/ic_arrow_right.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+
+    <view class="button-group">
+      <view class="function-button" bindtap="onUpdateNickName">
+        <view class="button-text">昵称</view>
+        <view class="button-name">{{userNickName}}</view>
+        <view class="button-arrow">
+          <image src="/images/ic_arrow_right.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <nickname-update
+    show="{{isShowName}}"
+    title="昵称"
+    nickname="{{userNickName}}"
+    placeholder="请输入你的昵称"
+    bind:confirm="onNickNameConfirm"
+    bind:cancel="onNickNameCancel"
+  ></nickname-update>
+</view>

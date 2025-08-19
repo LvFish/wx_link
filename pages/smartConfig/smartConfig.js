@@ -1,3 +1,4 @@
+import logger from '../../log.js'
 const app = getApp()
 
 let UDPsocket;
@@ -10,6 +11,7 @@ Page({
       motto: 'Hello World',
       errorMessage:'',
       modalShown: 0,
+      isModalShow: false,
       wifiInfo: {
           ssid:'',
           password:'',
@@ -27,28 +29,49 @@ Page({
       bssid:'',
       result: ''
     },
+
+    onHide() {
+      // 页面隐藏时释放资源（推荐）
+      this.releaseResources();
+    },
+    
+    onUnload() {
+      // 页面卸载时再次释放（确保双重保险）
+      this.releaseResources();
+    },
+    releaseResources() {
+      logger.info('release resource udpSocket', UDPsocket)
+      if (UDPsocket) {
+        UDPsocket.close(); // 触发 onClose 回调
+        UDPsocket = null;
+        logger.info('成功销毁实例')
+      }
+      this.setData({
+        run: false
+      })
+      
+    },
+    initResources() {
+      logger.info('init resource udpSocket', UDPsocket)
+      if (!UDPsocket) {
+        UDPsocket = wx.createUDPSocket();
+         // 绑定错误事件
+        UDPsocket.onError((err) => {
+          logger.error('UDP Socket create error:', err);
+        });
+        //udp绑定本机
+        UDPsocket.bind(18266);
+        //指定接收事件处理函数。监听收到消息的事件
+        UDPsocket.onMessage(this.onUdpMessage);
+        logger.info('初始化实例成功');
+      }
+    },
   
     onLoad() {
       this.getAvailableWifiList();
-      console.log('页面 index 开始加载事件onLoad()');
+      logger.info('页面 index 开始加载事件onLoad()');
       //新建udp实例
-      UDPsocket = wx.createUDPSocket();
-      // 绑定错误事件
-      UDPsocket.onError((err) => {
-        console.error('UDP Socket error:', err);
-        // 处理错误，例如记录日志、通知用户等
-        // wx.showToast({
-        //   title: 'UDP通信错误',
-        //   icon: 'none',
-        //   duration: 2000
-        // });
-      });
-      console.log(UDPsocket);
-      //udp绑定本机
-      UDPsocket.bind(18266);
-      //指定接收事件处理函数。监听收到消息的事件
-      UDPsocket.onMessage(this.onUdpMessage);
-      console.log('页面 index 加载完成事件onLoad()');
+      this.initResources();
     },
   
     onPasswordInput(e) {
@@ -67,29 +90,47 @@ Page({
     },
   
     getWifiList() {
-      wx.startWifi({
-          success: () => {
-              wx.getSetting({
-                  success: (res) => {
-                      if (!res.authSetting['scope.userLocation']) {
-                          wx.authorize({
-                              scope: 'scope.userLocation',
-                              success: () => {
-                                  this.fetchWifiList();
-                              },
-                              fail: (err) => {
-                                  console.error('获取 Wi-Fi 权限失败:', err);
-                              }
-                          });
-                      } else {
+      wx.getSetting({
+          success: (res) => {
+              if (!res.authSetting['scope.userLocation']) {
+                  wx.authorize({
+                      scope: 'scope.userLocation',
+                      success: () => {
                           this.fetchWifiList();
+                      },
+                      fail: (err) => {
+                          logger.error('获取 Wi-Fi 权限失败:', err);
                       }
-                  }
-              });
-          },
-          fail: (err) => {
-              console.error('开启 Wi-Fi 模块失败:', err);
+                  });
+              } else {
+                  this.fetchWifiList();
+              }
           }
+      });
+    },
+
+    getConnectedWifi() {
+      let that = this;
+      wx.getConnectedWifi({
+        success: (res) => {
+          logger.info("获取WiFi信息成功:", res);
+          const wifi = res.wifi;
+          // 检查是否获取到SSID和BSSID
+          if (wifi.SSID && wifi.BSSID) {
+            that.setData({
+              wifiInfo: {
+                ssid: wifi.SSID,    // WiFi名称
+                bssid: wifi.BSSID   // WiFi MAC地址
+              },
+            });
+            return;
+          }
+          logger.info('获取wifi失败, wifi:', wifi)
+          // 成功获取WiFi信息
+        },
+        fail: (err) => {
+          logger.error("获取WiFi信息失败:", err);
+        }
       });
     },
   
@@ -97,117 +138,97 @@ Page({
       wx.getWifiList({
           success: () => {
               wx.onGetWifiList((res) => {
-                console.log("res.wifilist", res.wifiList)
+                logger.info("res.wifilist", res.wifiList)
+                // 假设resList是从接口获取的WiFi列表数据
+                const filteredList = res.wifiList.filter(item => item.SSID && item.SSID.trim() !== '');
                   this.setData({
-                      wifiList: res.wifiList
+                      wifiList: filteredList,
                   });
               });
           },
           fail: (err) => {
-              console.error('获取 Wi-Fi 列表失败:', err);
+              logger.error('获取 Wi-Fi 列表失败:', err);
           }
       });
     },
   
-    sendDefaultDfg() {
-      console.log("call sendCfg")
-    },
-  
     getAvailableWifiList() {
+      logger.info('start getAvailableWifiList')
+      let that = this;
       wx.startWifi({
         success: () => {
-          this.getWifiList();
+          logger.info("WiFi模块初始化成功");
+          that.getConnectedWifi();
         },
         fail: (err) => {
-          this.setData({
+          logger.error("WiFi模块初始化失败");
+          that.setData({
             result: `开启 Wi-Fi 模块失败：${err.errMsg}`
           });
         }
       });
     },
-  
+
+    switchWifi(e) {
+      logger.info('start switchWifi:e', e);
+      const ssid = e.currentTarget.dataset.id;
+      const selectedWifi = this.data.wifiList.find(item => item.SSID === ssid);
+      let that = this;
+      logger.info('selectedWifi', selectedWifi)
+      if (selectedWifi) {
+        that.setData({
+          "wifiInfo.ssid":selectedWifi.SSID,
+          "wifiInfo.bssid":selectedWifi.BSSID,
+          isModalShow: false,
+        })
+      }
+    },
+
+    onSwitchWiFi() {
+      logger.info('start switch')
+      let that = this;
+      this.getWifiList();
+      // 获取wifiList
+      that.setData({
+        isModalShow: true,
+      });
+     
+    },
+
+    // 关闭弹窗
+    closeModal() {
+      this.setData({
+        isModalShow: false
+      });
+    },
+
     startSmartConfig() {
-      const { selectedWifi, password } = this.data;
-      if (!selectedWifi || !password) {
+      logger.info('start SmartConfig')
+      const { wifiInfo, password } = this.data;
+      logger.info('wifiInfo:', wifiInfo, ' password:', password)
+      if (!wifiInfo || !wifiInfo.ssid || !password) {
         this.setData({
           result: '请选择有效的 Wi-Fi 并输入密码'
         });
         return;
       }
-      console.log('selectedWifi', selectedWifi)
-      console.log('selectedWifi ssid', selectedWifi.SSID)
-      console.log('selectedWifi bssid', selectedWifi.BSSID)
+      logger.info('selectedWifi', wifiInfo)
+      logger.info('selectedWifi ssid', wifiInfo.ssid)
+      logger.info('selectedWifi bssid', wifiInfo.bssid)
       this.setData({
-        ssid: selectedWifi.SSID,
-        bssid: selectedWifi.BSSID,
+        ssid: wifiInfo.ssid,
+        bssid: wifiInfo.bssid,
         password: password
       })
       // 连接wifi
-      console.log("start execute()")
+      logger.info("start execute()")
       this.execute()
     },
 
-    initWIFI:function(){
-        return new Promise((resolve, reject) => {
-          let intervalId;
-          let localip;
-          let that = this;
-          let ssid = that.data.ssid;
-          let password = that.data.password;
-          let bssid = that.data.bssid;
-          console.log("start connectWifi()")
-          wx.showLoading({
-            title: '设置中...'
-          })
-          wx.getLocalIPAddress({
-            success (res) {
-              console.log("localip="+res.localip);
-              localip = res.localip;
-              that.setData({
-                "wifiInfo.ip_address":localip,
-                "wifiInfo.ssid":ssid,
-                "wifiInfo.password":password,
-                "wifiInfo.bssid":bssid,
-                run: true,
-                isWaiting: true
-              })
-              console.log('data:', that.data)
-            },
-            fail(err) {
-              console.error("getLocalIPAddress is error" + err); // 错误信息
-            }
-          })
-          //等待获取成功
-          intervalId = setInterval(() => {
-            if(localip && bssid)
-            {
-              this.setData({
-                "wifiInfo.ip_address": localip,
-                "wifiInfo.bssid": bssid,
-              });
-              console.log(`ip_address=${this.data.wifiInfo.ip_address}, bssid=${this.data.wifiInfo.bssid}`);
-              this.make_datumcode();
-    
-              clearInterval(intervalId);
-              resolve(); // 或者可以根据情况调用 reject() 表示失败
-            }
-          }, 100);
-        });
-      },
-  
-    stringToUint8Array(str) {
-      const len = str.length;
-      const arr = new Uint8Array(len);
-      for (let i = 0; i < len; i++) {
-        arr[i] = str.charCodeAt(i);
-      }
-      return arr;
-    },
     execute: async function(){
       await this.initWIFI();
 
       for(let i = 0; i< 10; i++){
-        console.log("start for send code")
         await this.send_guidecode();
         await this.send_datumcode();
       }
@@ -216,10 +237,65 @@ Page({
         isWaiting: false
       });
     },
-    //发送send_guidecode，515、514、513、512
+
+    initWIFI:function(){
+      return new Promise((resolve, reject) => {
+        let intervalId;
+        let localip;
+        let that = this;
+        let ssid = that.data.ssid;
+        let password = that.data.password;
+        let bssid = that.data.bssid;
+        logger.info("start connectWifi()")
+        wx.showLoading({
+          title: '设置中...'
+        })
+        wx.getLocalIPAddress({
+          success (res) {
+            localip = res.localip;
+            that.setData({
+              "wifiInfo.ip_address":localip,
+              "wifiInfo.ssid":ssid,
+              "wifiInfo.password":password,
+              "wifiInfo.bssid":bssid,
+              run: true,
+              isWaiting: true
+            })
+            logger.info('get local ip success localip:', localip)
+          },
+          fail(err) {
+            logger.error("getLocalIPAddress is error" + err); // 错误信息
+          }
+        })
+        //等待获取成功
+        intervalId = setInterval(() => {
+          if(localip && bssid)
+          {
+            this.setData({
+              "wifiInfo.ip_address": localip,
+              "wifiInfo.bssid": bssid,
+            });
+            logger.info(`ip_address=${this.data.wifiInfo.ip_address}, bssid=${this.data.wifiInfo.bssid}`);
+            this.make_datumcode();
+  
+            clearInterval(intervalId);
+            resolve(); // 或者可以根据情况调用 reject() 表示失败
+          }
+        }, 100);
+      });
+    },
+    
+    stringToUint8Array(str) {
+      const len = str.length;
+      const arr = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        arr[i] = str.charCodeAt(i);
+      }
+      return arr;
+    },
+   
     send_guidecode:function(){
       return new Promise((resolve, reject) => {
-        console.log("start send_guidecode")
         let intervalId;  // 保存定时器 ID
         let duration = 2000;  // 总持续时间 5 秒
         let interval = 8;  // 每次打印的间隔 8 毫秒
@@ -230,11 +306,11 @@ Page({
           if (!this.data.run) {
             // 如果 run 变为 false
             clearInterval(intervalId);
-            console.log('提前停止打印');
+            // logger.info('提前停止打印');
             resolve(); // 或者可以根据情况调用 reject() 表示失败
           } else {
             // 打印数组中的元素
-            // console.log(arr[index]);
+            // logger.info(arr[index]);
             //向指定的IP和port发送信息
             UDPsocket.send({
               address: '255.255.255.255',
@@ -254,7 +330,6 @@ Page({
         // 5 秒后停止打印
         setTimeout(() => {
           clearInterval(intervalId);  // 停止 setInterval
-          console.log('打印完成');
           resolve(); // 表示异步操作成功完成
         }, duration);
       });
@@ -263,7 +338,6 @@ Page({
     //发送 datumcode
     send_datumcode:function(){
       return new Promise((resolve, reject) => {
-        console.log("start send_datumcode")
         let intervalId;  // 保存定时器 ID
         let duration = 4000;  // 总持续时间 5 秒
         let interval = 8;  // 每次打印的间隔 8 毫秒
@@ -274,11 +348,11 @@ Page({
           if (!this.data.run) {
             // 如果 run 变为 false
             clearInterval(intervalId);
-            console.log('提前停止打印');
+            // logger.info('提前停止打印');
             resolve(); // 表示异步操作成功完成
           } else {
             // 打印数组中的元素
-            // console.log(arr[index]+40);
+            // logger.info(arr[index]+40);
             //向指定的IP和port发送信息
             UDPsocket.send({
               address: '255.255.255.255',
@@ -298,7 +372,6 @@ Page({
         // 10 秒后停止打印
         setTimeout(() => {
           clearInterval(intervalId);  // 停止 setInterval
-          console.log('打印完成');
           resolve(); // 表示异步操作成功完成
         }, duration);
       });
@@ -381,18 +454,13 @@ Page({
   
     tricode:function(data, index, tricode, n, comment){
       let crc = 0;
-      crc = this.single_crc8(crc, data);
-      console.log("data is "+ data + ", crc data:" + crc);
+      crc = this.single_crc8(crc, data);    
       crc = this.single_crc8(crc, index);
-      console.log("crc index:" + crc);
   
       tricode[n] = this.MKINT16(0x00, this.MKBYTE(this.HINIB(crc), this.HINIB(data)));
       let temp_value = this.MKBYTE(this.HINIB(crc), this.HINIB(data));
-      console.log(`${temp_value}, ${this.HINIB(crc)} ,${this.HINIB(data)}`);
       tricode[n+1] = this.MKINT16(0x01, index);
       tricode[n+2] = this.MKINT16(0x00, this.MKBYTE(this.LONIB(crc), this.LONIB(data)));
-  
-      console.log("TriCode: data=" + data + ",index="+index + ",comment=" + comment + " -> " + `tricode[${n}]=${tricode[n].toString(16)}, tricode[${n+1}]=${tricode[n+1].toString(16)}, tricode[${n+2}]=${tricode[n+2].toString(16)}`);
   
       return 3;
     },
@@ -400,49 +468,42 @@ Page({
     make_datumcode:function(){
       //ssid
       const ssid = this.data.wifiInfo.ssid;//"IoT_Test";
-      console.log('ssid is:'+ssid);
+      logger.info('ssid is:'+ssid);
       const arr = ssid.split("");
-      console.log(arr);
       const ssidNumber = arr.map(letter => letter.charCodeAt(0));
-      console.log(ssidNumber);
   
       //passwd
       const APpasswd = this.data.wifiInfo.password;//"Asdf123456"
-      console.log("passwd: " + APpasswd + ", length is " + APpasswd.length);
+      logger.info("passwd: " + APpasswd + ", length is " + APpasswd.length);
       const Passwordarr = APpasswd.split("");
-      console.log(Passwordarr);
       const passwordNumber = Passwordarr.map(letter => letter.charCodeAt(0));
-      console.log(passwordNumber);
   
       //mac地址 bssid
       const MacAddress = this.data.wifiInfo.bssid;//"00:1A:2B:3C:4D:5E";
       const MacArray = MacAddress.split(":");
-      console.log(MacArray);
       const MacArrayNum = MacArray.map(string => parseInt(string, 16));
       let bssid_len = MacArrayNum.length;
-      console.log(MacArrayNum);
   
       //ip
-      const ipAddress = this.data.wifiInfo.ip_address;//"192.168.148.129";
+      const ipAddress = this.data.wifiInfo.ip_address;
+      logger.info("ipAddress", ipAddress);
       const ipArray = ipAddress.split(".");
-      console.log(ipArray);
       const ipArrayNum = ipArray.map(string => Number(string));
       let ip_len = ipArrayNum.length;
-      console.log(ipArrayNum);
   
       let ssid_len = ssidNumber.length;
       let ssid_crc = this.number_crc8(ssidNumber);
-      console.log('ssid length: ' + ssid_len +', ssid number crc:'+ ssid_crc);
+      logger.info('ssid length: ' + ssid_len +', ssid number crc:'+ ssid_crc);
     
       let bssid_crc = this.number_crc8(MacArrayNum);
-      console.log('bssid number crc:'+ bssid_crc);
+      logger.info('bssid number crc:'+ bssid_crc);
       let password_len = APpasswd.length;
   
       //总长度
       let total_len = 0;
       total_len = 1 + 1 + 1 + 1 + 1 + 4 + password_len + ssid_len;
       total_len %= 256;
-      console.log("total_len is " + total_len);
+      logger.info("total_len is " + total_len);
   
       //xor结果
       let total_xor = 0;
@@ -450,17 +511,13 @@ Page({
       total_xor ^= password_len;
       total_xor ^= ssid_crc;
       total_xor ^= bssid_crc;
-      console.log("total_xor1 result: " + total_xor);
       total_xor = this.xor_update_buf(total_xor, ipArrayNum);
-      console.log("total_xor2 result: " + total_xor);
       total_xor = this.xor_update_buf(total_xor, passwordNumber);
-      console.log("total_xor3 result: " + total_xor);
       total_xor = this.xor_update_buf(total_xor, ssidNumber);
-      console.log("total_xor result: " + total_xor);
     
       //let length = 105;
       const datumcode = this.data.data_umcode;//Array.from({ length: length }, () => 0); // 初始化元素为0
-      console.log(datumcode); // [0, 0, 0, 0, 0]
+      logger.info('datumcode:', datumcode); // [0, 0, 0, 0, 0]
         
       let n = 0;
       let t = 0;
@@ -494,18 +551,18 @@ Page({
         "data_umcode": datumcode,
         "data_umcode_length": n
       });
-      console.log(`dcode_len = ${n}, data_umcode_length=${this.data.data_umcode_length}`);
+      logger.info(`dcode_len = ${n}, data_umcode_length=${this.data.data_umcode_length}`);
     },
   
     //UDP接收到数据的事件处理函数，参数res={message,remoteInfo}
     onUdpMessage: function(res) {
       let isRun = this.data.run
       if(res.remoteInfo.size > 0 && isRun) {
-        console.log('onUdpMessage() 接收数据'+res.remoteInfo.size +'字节：'+JSON.stringify(res,null,'\t'));
+        logger.info('onUdpMessage() 接收数据'+res.remoteInfo.size +'字节：'+JSON.stringify(res,null,'\t'));
         let mac = this.ExtractMacAddress(new Uint8Array(res.message))
-        console.log("res.message", res.message)
-        console.log("res.message unit8", new Uint8Array(res.message))
-        console.log("mac address", mac)
+        logger.info("res.message", res.message)
+        logger.info("res.message unit8", new Uint8Array(res.message))
+        logger.info("mac address", mac)
         // todo start add device
         this.setData({
           udpResData: 'UDP接收到的内容:'+ mac
@@ -513,7 +570,7 @@ Page({
         //收到设备的回信, run设置为false, 提前退出
         if(res.remoteInfo.size == 1+6+4){
           if (isRun) {
-            console.log("start register device")
+            logger.info("start register device")
             let url = `${getApp().globalData.baseUrl}/device/add`
             wx.request({
               url: url,
@@ -526,18 +583,37 @@ Page({
                 url:"https://img1.baidu.com/it/u=2445505683,2852819399&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
               },
             success(res) {
-                if (res.data.code == 200) {
-                  console.log(res.data)
-                } else wx.showModal({
-                    title: '提示',
-                    content: res.data.msg,
-                    showCancel: false,
-                    success(res) {
-                        if (res.confirm) {
-                            console.log('用户点击确定')
-                        }
-                    }
-                });
+              logger.info('add config result', res.data)
+              if (res.data.code == 200) {
+                logger.info(res.data)
+                wx.showModal({
+                  title: '配网成功啦',
+                  content: '配网成功啦',
+                  showCancel: false,
+                  success(res) {
+                      if (res.confirm) {
+                        wx.switchTab({
+                          url: '/pages/new_device/new_device',
+                          success (res) {
+                              logger.info(res)
+                          },
+                          fail: (err)=> {
+                            logger.info('jump err: ', err)
+                          },
+                        })
+                      }
+                  }
+                })
+              } else wx.showModal({
+                  title: '提示',
+                  content: res.data.msg,
+                  showCancel: false,
+                  success(res) {
+                      if (res.confirm) {
+                          logger.info('用户点击确定')
+                      }
+                  }
+              });
             },
             fail(err) {
                 wx.showModal({
@@ -546,7 +622,7 @@ Page({
                     showCancel: false,
                     success(res) {
                         if (res.confirm) {
-                            console.log('用户点击确定')
+                            logger.info('用户点击确定')
                         }
                     }
                 });

@@ -1,0 +1,8 @@
+{
+  "navigationBarBackgroundColor": "#FFF2F2",
+  "navigationBarTitleText": "编辑资料",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "nickname-update": "/components/nickname-update/nickname-update"
+  }
+}

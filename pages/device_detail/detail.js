@@ -198,7 +198,7 @@ Page({
             complete() {
                 wx.hideLoading();
             }
-        });
+      });
     },
     deleteItem: function(e) {
       let _this = this;

@@ -1,87 +1,103 @@
+/* pages/setting/setting.wxss */
 .container {
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* align-items: center; */
   justify-content: flex-start;
-  padding: 20rpx;
+  padding: 30rpx;
+  /* background-color: #f6f6f6; */
   background: linear-gradient(145.25deg, rgba(255, 242, 242, 1) 0%, rgba(232, 243, 255) 100%);
   min-height: 100vh;
-  /* box-sizing: border-box; */
 }
-
-.top-empty {
-  width: 100%;
-  height: 600rpx;
+.function-buttons {
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
-  border-radius: 20rpx;
-  margin-bottom: 40rpx;
-}
-.input-group{
+  border-radius: 16rpx;
+  /* gap: 30rpx; */
   width: 100%;
-  margin-top: 100rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
 }
 
-.input-item {
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.function-button {
   display: flex;
   align-items: center;
-  width: 80%;
-  height: 80rpx;
-  margin-bottom: 60rpx;
-  margin-left: 10%;
-  padding: 0 20rpx;
-  box-sizing: border-box;
-  border-bottom: 1rpx solid rgba(207, 207, 207, 1);
-}
-.icon {
-  width: 40rpx;
-  height: 40rpx;
-  margin-right: 20rpx;
-}
-.input {
-  flex: 1;
-  height: 100%;
-  font-size: 28rpx;
-}
-
-.input-text {
-  flex: 1;
-  font-size: 28rpx;
-}
-
-.input-btn {
+  padding: 30rpx;
+  position: relative;
+  overflow: hidden;
   width: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.connect-btn {
-  width: 80%;
-  height: 80rpx;
-  line-height: 80rpx;
-  text-align: center;
-  background-color: rgba(191, 113, 34, 1);
-  color: rgba(97, 51, 5, 1);
-  font-size: 32rpx;
-  border-radius: 306rpx;
-  margin-top: 100rpx;
+.function-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
 }
 
-.connect-btn.disabled {
-  width: 80%;
-  background-color: rgba(229, 229, 229, 1);
-  color: #999;
+.button-text{
+  font-size: 28rpx;
+  color: #333;
+  flex: 0.9; /* 标题自适应剩余空间 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-
-button {
-  margin-top: 20px;
+.button-image {
+  width: 120rpx !important;
+  height: 120rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20rpx;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 2rpx solid #f0f0f0;
+  flex-shrink: 0;
+}
+.avator {
+  width: 100%;
+  height: 100%;
 }
 
-.result {
-  margin-top: 20px;
-  color: red;
+.button-image image {
+  width: 100%;
+  height: 100%;
 }
 
+.button-icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
 
-/* 中继器切换弹窗 */
+.button-icon image {
+  width: 100%;
+  height: 100%;
+}
+
+.button-title {
+  font-size: 28rpx;
+  color: #333;
+  flex: 1;
+}
+
+.button-arrow {
+  width: 32rpx;
+  height: 32rpx;
+  flex-shrink: 0;
+}
+
+.button-arrow image {
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
 .repeater-modal {
   position: fixed;
   top: 0;
@@ -102,7 +118,7 @@ button {
 .repeater-modal.show {
   opacity: 1;
   visibility: visible;
-  padding-top: 100rpx;
+  padding-top: 50%;
 }
 
 .modal-content {
@@ -159,22 +175,4 @@ button {
 
 .repeater-item.selected .repeater-item-name {
   color: #409EFF;
-}
-
-/* 弹窗下方添加按钮 */
-.select-wifi-btn {
-  position: absolute;
-  bottom: -40rpx;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-  text-align: center;
-  background-color: #409EFF;
-  color: #fff;
-  border-radius: 40rpx;
-  font-size: 28rpx;
-  box-shadow: 0 4rpx 12rpx rgba(64, 158, 255, 0.3);
-  z-index: 10;
 }

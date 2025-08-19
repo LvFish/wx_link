@@ -15,10 +15,6 @@ Page({
           // console.log("currentTime", currentTime)
           _this.setData({ nowTime: currentTime});
         }, 1000);
-        console.log("onload")
-        console.log('app.globalData')
-        console.log(app.globalData)
-        console.log("app.globalData.session_key", app.globalData.session_key)
         if (app.globalData.session_key) {
           wx.navigateTo({
               url: '/pages/device/device',
@@ -26,7 +22,7 @@ Page({
                   console.log(res)
               }
           })
-      } else {
+        } else {
           app.globalData.redirect = '/pages/device/device'
           console.log("redirect login")
           wx.navigateTo({
@@ -35,7 +31,7 @@ Page({
                   console.log("jump login", res)
               }
           })
-      }
+        }
     },
     onReady () {},
     onShow () {

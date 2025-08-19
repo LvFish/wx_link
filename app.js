@@ -16,7 +16,7 @@ App({
   },
 
   onLaunch() {
-    // this.checkNewVersion(); 
+    // this.startLogin(); 
     // const _this = this;
   },
   checkNewVersion () { // 检查版本更新
@@ -53,6 +53,52 @@ App({
               content: "当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。"
           });
       }
+  },
+  startLogin() {
+    return new Promise((resolve, reject) => {
+    
+    const that = this;
+    if (that.globalData.openid) {
+      resolve(that.globalData.openid);
+      return;
+    }
+    //弹窗 
+    // 开始登陆
+    wx.login({
+      success (res) {
+          if (res.code) {
+              console.log("resCode", res.code)
+              wx.request({
+                  url: `${that.globalData.baseUrl}/api/auth/login`,
+                  header: { 'content-type': 'application/json' },
+                  method: 'POST',
+                  data: { code: res.code },
+                  success (r) {
+                    console.log("login success data:", r.data)
+                      if (r.data.code == 200) {
+                        that.globalData.userInfo = r.data.data.userInfo
+                        that.globalData.sessionKey = r.data.data.sessionKey
+                        that.globalData.openid = r.data.data.openid
+                        that.globalData.isLogin = r.data.data.login
+                        resolve(that.globalData.openid);
+                        return;
+                      } else {
+                        reject(new Error('登陆失败，请重试'));
+                        return;
+                      }
+                  },
+                  fail(err) {
+                    reject(new Error('登陆失败，请重试'));
+                    return;
+                  },
+              })
+          } else {
+            reject(new Error('登陆失败，请重试'));
+            return;
+          }
+      }
+    });
+    });
   }
   
 })

@@ -1,9 +1,20 @@
 <view class="container">
-  <view class="list">
-    <view class="list-item" wx:for="{{list}}" wx:key="mappingId" bindtap="onListClick" data-id="{{item.mappingId}}" data-index="{{index}}">
-      <image class="list-item-img" src="{{item.url}}" mode="aspectFill"></image>
-      <view class="list-item-desc" >{{item.baseDeviceName}}</view>
-      <button class="list-item-delete" catchtap="deleteItem" data-index="{{index}}" hover-stop-propagation="true">删除</button>
+  <!-- <view class="page-header">
+    <view class="header-title">我的玩具列表</view>
+    <view class="add-toy" bindtap="addToy">+ 添加玩具</view>
+  </view> -->
+  
+  <view class="toy-list" wx:if="{{list.length > 0}}">
+    <view class="toy-item" wx:for="{{list}}" wx:key="mappingId" bindtap="onListClick" data-id="{{item.mappingId}}" data-index="{{index}}">
+      <view class="toy-image">
+        <image src="{{item.url}}" mode="aspectFill"></image>
+      </view>
+      <view class="toy-info">
+        <view class="toy-name">{{item.baseDeviceName}}</view>
+      </view>
+      <view class="delete-button" bindtap="deleteItem" data-index="{{index}}">
+        <image src="/images/ic_delete.png" mode="aspectFit"></image>
+      </view>
     </view>
   </view>
   <button class="add-button" bindtap="showModal">添加玩具</button>

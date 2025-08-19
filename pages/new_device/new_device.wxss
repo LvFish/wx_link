@@ -1,85 +1,100 @@
+/* 全局容器 */
 .container {
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* align-items: center; */
-  justify-content: flex-start;
-  padding: 20rpx;
   background: linear-gradient(145.25deg, rgba(255, 242, 242, 1) 0%, rgba(232, 243, 255) 100%);
   min-height: 100vh;
-  /* box-sizing: border-box; */
+  padding: 30rpx;
+  justify-content: flex-start;
 }
 
-.top-empty {
-  width: 100%;
-  height: 600rpx;
-  background-color: #fff;
-  border-radius: 20rpx;
+/* 顶部提示 */
+/* .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 40rpx;
 }
-.input-group{
-  width: 100%;
-  margin-top: 100rpx;
+.hint {
+  font-size: 28rpx;
+  color: #333;
 }
-
-.input-item {
+.header-icons {
   display: flex;
   align-items: center;
-  width: 80%;
-  height: 80rpx;
-  margin-bottom: 60rpx;
-  margin-left: 10%;
-  padding: 0 20rpx;
-  box-sizing: border-box;
-  border-bottom: 1rpx solid rgba(207, 207, 207, 1);
 }
 .icon {
-  width: 40rpx;
-  height: 40rpx;
-  margin-right: 20rpx;
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 20rpx;
+} */
+
+/* 中继器标题 */
+.repeater-header {
+  display: flex;
+  align-items: center;
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 30rpx;
+  margin-left: 30rpx;
+  width: 100%;
+  font-weight: 400;
+  letter-spacing: 0rpx;
+  line-height: 27.44rpx;
+  color: rgba(17, 17, 17, 1);
+  text-align: left;
+  vertical-align: top;
 }
-.input {
-  flex: 1;
-  height: 100%;
-  font-size: 28rpx;
+.repeater-icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-left: 10rpx;
 }
 
-.input-text {
-  flex: 1;
-  font-size: 28rpx;
-}
-
-.input-btn {
+/* 玩具列表 */
+.toy-list {
+  overflow: hidden;
   width: 100%;
 }
 
-.connect-btn {
-  width: 80%;
+.toy-cat image {
+  position: absolute;
+  right: 30rpx;
+  top: 10rpx;
+  width: 120rpx;
+  height: 120rpx;
+}
+.toy-item {
+  margin-top: 30rpx;
+  display: flex;
+  justify-content: space-between;
+  height: 80rpx;
+  align-items: center;
+  background: #FFF;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+.toy-title {
+  font-size: 28rpx;
+  color: #333;
+}
+.gray-text {
+  color: #CCC; /* 禁用态文字颜色 */
+}
+
+/* 删除按钮 */
+.delete-btn {
+  position: fixed; /* 固定定位 */
+  bottom: 30rpx;   /* 距离底部 30rpx */
+  width: 300rpx;
   height: 80rpx;
   line-height: 80rpx;
   text-align: center;
-  background-color: rgba(191, 113, 34, 1);
-  color: rgba(97, 51, 5, 1);
-  font-size: 32rpx;
-  border-radius: 306rpx;
-  margin-top: 100rpx;
+  background: #E6E6E6;
+  color: #666;
+  font-size: 28rpx;
+  border-radius: 40rpx;
+  margin: 0 auto;
 }
-
-.connect-btn.disabled {
-  width: 80%;
-  background-color: rgba(229, 229, 229, 1);
-  color: #999;
-}
-
-
-button {
-  margin-top: 20px;
-}
-
-.result {
-  margin-top: 20px;
-  color: red;
-}
-
 
 /* 中继器切换弹窗 */
 .repeater-modal {
@@ -162,7 +177,7 @@ button {
 }
 
 /* 弹窗下方添加按钮 */
-.select-wifi-btn {
+.add-repeater-btn {
   position: absolute;
   bottom: -40rpx;
   left: 50%;
@@ -177,4 +192,19 @@ button {
   font-size: 28rpx;
   box-shadow: 0 4rpx 12rpx rgba(64, 158, 255, 0.3);
   z-index: 10;
+}
+
+.add-repeater-btn2 {
+  background-color: rgba(191, 113, 34, 1);
+  border: 1rpx solid ;
+  border-radius: 40rpx;
+  width: 140rpx;
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+}
+
+/* 事件冒泡阻止 */
+.stopPropagation {
+  pointer-events: none;
 }

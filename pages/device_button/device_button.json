@@ -1,5 +1,5 @@
 {
-  "navigationBarBackgroundColor": "#00b1b5",
+  "navigationBarBackgroundColor": "#111111",
   "navigationBarTitleText": "控制界面",
   "usingComponents": {
       "modal": "/components/modal/modal",

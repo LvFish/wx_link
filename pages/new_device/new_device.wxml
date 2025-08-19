@@ -1,0 +1,81 @@
+<!--pages/new_device/new_device.wxml-->
+<view class="container">
+<!-- 顶部提示区 -->
+<!-- <view class="header">
+    <text class="hint">快来陪我玩吧 ~</text>
+    <view class="header-icons">
+      <image src="/images/more.png" class="icon" />
+      <image src="/images/eye.png" class="icon" />
+    </view>
+  </view> -->
+
+  <!-- 中继器标题区 -->
+  <view class="repeater-header" wx:if="{{currentDevice==null}}">
+    <text class="repeater-name">我的设备</text>
+  </view>
+  <view class="repeater-header" wx:if="{{currentDevice!=null}}">
+    <view wx:if="{{!isDeviceUpdate}}">
+      <text class="repeater-name">{{currentDevice.name}}</text>
+    </view>
+    <view wx:if="{{isDeviceUpdate}}">
+      <input class="repeater-name-input" value="{{inputValue}}" bindinput="onInputChange"/>
+    </view>
+    <image src="/images/save.png" class="repeater-icon" bindtap="onSaveName" wx:if="{{isDeviceUpdate}}"/>
+    <image src="/images/signal.png" class="repeater-icon" bindtap="onModifyName" wx:if="{{!isDeviceUpdate}}"/>
+    <image src="/images/arrow.png" class="repeater-icon" bindtap="onSwitchDevice" wx:if="{{!isDeviceUpdate}}"/>
+  </view>
+
+  <!-- 玩具开关列表 -->
+  <view class="toy-list">
+    <view class="toy-cat">
+      <image src="/images/cat.png" class="repeater-icon" />
+    </view>
+    <view class="toy-item" wx:if="{{toyList.length == 0}}">
+      <text class="toy-title" >快添加中继器和宠物一起玩耍吧！</text>
+      <view class="add-repeater-btn2" bindtap="goToAddRepeater">去添加</view>
+    </view>
+    <view class="toy-item" wx:for="{{toyList}}" wx:key="id" bindtap="onListClick"  data-index="{{index}}">
+        <text class="toy-title {{item.enable ? '': 'gray-text'}}">{{item.baseDeviceName}}</text>
+      <switch 
+      checked="{{item.enable}}" 
+      color="#4CD964" 
+      catchtap="onSwitchChange"
+      data-index="{{index}}"
+      />
+    </view>
+  </view>
+
+  <!-- 底部删除按钮 -->
+  <view class="delete-btn" wx:if="{{toyList.length != 0}}" bindtap="onDeleteRepeater">
+    删除中继器
+  </view>
+
+  <!-- 弹窗切换中继器 -->
+  <view class="repeater-modal {{isModalShow ? 'show' : ''}}" bindtap="closeModal">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">选择中继器</text>
+        <image src="/images/close.png" class="close-icon" bindtap="closeModal" />
+      </view>
+      
+      <view class="repeater-list">
+        <view class="repeater-item {{item.deviceId === currentDevice.deviceId ? 'selected' : ''}}" 
+              wx:for="{{list}}" 
+              wx:key="id" 
+              bindtap="switchRepeater" 
+              data-id="{{item.deviceId}}"
+        >
+          <text class="repeater-item-name">{{item.name}}</text>
+          <text class="repeater-item-status {{item.status ? 'online' : 'offline'}}">
+            {{item.status ? '已连接' : '未连接'}}
+          </text>
+        </view>
+      </view>
+      
+      <!-- 弹窗正下方添加按钮 -->
+      <view class="add-repeater-btn" bindtap="goToAddRepeater">
+        <text>添加中继器</text>
+      </view>
+    </view>
+  </view>
+</view>

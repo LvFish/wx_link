@@ -1,107 +1,147 @@
-/* pages/profile/profile.wxss */
-
-page {
-  background: #f1f1f1;
+.container {
+  justify-content: flex-start;
+  padding: 30rpx;
+  /* background-color: #f6f6f6; */
+  background: linear-gradient(145.25deg, rgba(255, 242, 242, 1) 0%, rgba(232, 243, 255) 100%);
+  min-height: 100vh;
 }
 
-.ruff-header {
-  width: 100%;
-  position: relative;
-  text-align: center;
-}
-
-.ruff-header .header-bg {
-  width: 100%;
-}
-
-.ruff-header .ruff-info {
-  top: 40rpx;
-  left: 0rpx;
-  right: 0rpx;
-  position: absolute;
-}
-
-.ruff-header .ruff-info > view {
-  overflow: hidden;
-  width: 128rpx;
-  height: 128rpx;
-  display: block;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-  margin: 20rpx auto 20rpx auto;
-}
-
-.ruff-header .ruff-info .ruff-avatar-button {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  border: none;
-  background: none;
-  padding: 0;
-  position: relative;
-}
-
-.ruff-header .ruff-info .ruff-avatar-button .ruff-avatar {
-  width: 100%;
-  height: 100%;
-  object-fit: scaleToFill;
-  border-radius: 50%;
-}
-
-.ruff-header .ruff-nickname {
-  width: 100rpx;
-  height: 30rpx;
-  position: relative;
-  margin: 0rpx auto;
-  text-align: center;
-}
-
-.ruff-service {
-  width: 94%;
-  background: #ffffff;
-  box-shadow: 0 0 10rpx 5rpx #f0f0f0;
-  border-radius: 10rpx;
-  margin: 20rpx auto;
-}
-
-.ruff-service .title {
-  font-size: 32rpx;
-  padding: 30rpx 20rpx;
-}
-
-.ruff-service .list {
-  display: flex;
-  flex-wrap: wrap;
-  text-align: center;
-  align-items: center;
-}
-
-.ruff-service .list .item {
+/* 个人中心头部 */
+.profile-header {
   padding: 40rpx 0;
-  width: 33.333333%;
-  flex: 0 0 33.333333%;
-  box-sizing: border-box;
-  border-top: 1px solid #f0f0f0;
-  border-right: 1px solid #f0f0f0;
+  margin-bottom: 40rpx;
+  width: 100%;
 }
 
-.ruff-service .list .item:nth-child(3n+3) {
-  border-right: none;
-  /*border-bottom: 1px solid #f0f0f0;*/
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: #fff; */
+  border-radius: 20rpx;
+  padding: 30rpx 30rpx;
+  /* box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08); */
+  position: relative;
+  overflow: hidden;
 }
 
-.ruff-service .list .item:last-child {
-  border-bottom: none;
+.avatar-container {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20rpx;
+  border: 2rpx solid #f0f0f0;
+  flex-shrink: 0;
 }
 
-.ruff-service .list .item image {
-  width: 72rpx;
-  height: 72rpx;
+.avatar {
+  width: 100%;
+  height: 100%;
 }
 
-.ruff-service .list .item text {
-  font-size: 32rpx;
+.user-detail {
+  flex: 1;
+  min-width: 0;
 }
 
+.nickname {
+  font-size: 40rpx;
+  /* font-weight: 500; */
+  color: #333;
+  margin-bottom: 6rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.login-tip {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.right-arrow {
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 20rpx;
+  flex-shrink: 0;
+}
+
+.right-arrow image {
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+}
+
+/* 功能按钮区域 */
+/* 功能按钮区域 */
+.function-buttons {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 16rpx;
+  /* gap: 30rpx; */
+  width: 100%;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.function-button {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.function-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.button-text{
+  font-size: 28rpx;
+  color: #333;
+  flex: 0.9; /* 标题自适应剩余空间 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button-icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.button-icon image {
+  width: 100%;
+  height: 100%;
+}
+
+.button-title {
+  font-size: 28rpx;
+  color: #333;
+  flex: 1;
+}
+
+.button-arrow {
+  width: 32rpx;
+  height: 32rpx;
+  flex-shrink: 0;
+}
+
+.button-arrow image {
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
