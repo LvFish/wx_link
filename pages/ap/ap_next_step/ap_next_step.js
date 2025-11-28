@@ -1,4 +1,5 @@
-import logger from '../../log.js'
+// pages/ap/ap_next_step/ap_next_step.js
+import logger from '../../../log.js'
 const app = getApp()
 
 let UDPsocket;
@@ -12,7 +13,6 @@ Page({
       errorMessage:'',
       modalShown: 0,
       isModalShow: false,
-      isChecked: false,
       wifiInfo: {
           ssid:'',
           password:'',
@@ -67,13 +67,6 @@ Page({
         logger.info('初始化实例成功');
       }
     },
-    handleRadioChange(e) {
-      let temp = this.data.isChecked
-      console.log('temp:', temp)
-      this.setData({
-        isChecked: !temp
-      });
-    },
   
     onLoad() {
       this.getAvailableWifiList();
@@ -89,9 +82,7 @@ Page({
     },
 
     changeAp(e){
-      wx.navigateTo({
-        url: '../blue/blue_config/blue_config',
-    });
+      console.log("jump ap")
     },
   
     onWifiChange(e) {
@@ -618,7 +609,7 @@ Page({
               header: { 'content-type': 'application/json' },
               method: 'POST',
               data: { 
-                name: "PawsLink Box",
+                name: "宠物精灵",
                 mac: mac,
                 openId: getApp().globalData.openid,
                 url:"https://img1.baidu.com/it/u=2445505683,2852819399&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
@@ -695,5 +686,4 @@ Page({
     },
   
   });
-  
   

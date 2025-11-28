@@ -1,42 +1,50 @@
 <view class="remote-container">
-   <!-- 屏幕区域 -->
-   <view class="screen"></view>
+  <!-- 屏幕区域 -->
+  <view class="screen">
+    请把视频悬浮框/画中画模块放在虚线内，以便更好的操作
+  </view>
 
 
-   
+
   <!-- 方向按键区域 -->
   <view class="buttons-container">
 
     <view class="row row-middle">
       <view class="btn2 module" bindtap="handleModule">
-        <button>模式</button>
+        <button class="custom-btn {{modelActive ? 'active' : ''}}">自动模式</button>
+        <image src="{{currentModel}}" />
       </view>
       <view class="btn2 light" bindtap="handleLight">
-        <button>灯光</button>
+        <button class="custom-btn {{lightActive ? 'active' : ''}}">灯光</button>
+        <image src="{{currentLight}}" />
       </view>
     </view>
 
     <!-- 第一行：上按钮（居中） -->
     <view class="row row-top">
       <view class="btn up" bindtap="handleUp">
-        <image src="/images/up.png"></image>
+        <image src="{{currentUp}}" data-name='up' bindtouchstart="handleTouchStart" bindtouchend="handleTouchEnd"
+          bindtouchcancel="handleTouchEnd"></image>
       </view>
     </view>
-    
+
     <!-- 第二行：左右按钮（居左和居右） -->
     <view class="row row-middle">
       <view class="btn left" bindtap="handleLeft">
-        <image src="/images/left.png"></image>
+        <image src="{{currentLeft}}" data-name='left' bindtouchstart="handleTouchStart" bindtouchend="handleTouchEnd"
+          bindtouchcancel="handleTouchEnd"></image>
       </view>
       <view class="btn right" bindtap="handleRight">
-        <image src="/images/right.png"></image>
+        <image src="{{currentRight}}" data-name='right' bindtouchstart="handleTouchStart" bindtouchend="handleTouchEnd"
+          bindtouchcancel="handleTouchEnd"></image>
       </view>
     </view>
-    
+
     <!-- 第三行：下按钮（居中） -->
     <view class="row row-bottom">
       <view class="btn down" bindtap="handleDown">
-        <image src="/images/down.png"></image>
+        <image src="{{currentDown}}" data-name='down' bindtouchstart="handleTouchStart" bindtouchend="handleTouchEnd"
+          bindtouchcancel="handleTouchEnd"></image>
       </view>
     </view>
   </view>

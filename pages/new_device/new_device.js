@@ -109,8 +109,12 @@ Page({
             if (res.data.code == 200) {
               console.log("toy list", res.data.data)
               if (res.data.data.length > 0) {
+                const filteredData = res.data.data.filter(item => {
+                  // 额外判断item是否存在name属性，避免undefined报错
+                  return item;
+                });
                 _this.setData({ 
-                  toyList: res.data.data
+                  toyList: filteredData
                 });
               }
             } else wx.showModal({
@@ -420,20 +424,29 @@ Page({
     const index = e.currentTarget.dataset.index;
     const item = this.data.toyList[index];
     console.log(item)
-    if (!item.enable) {
-      wx.showToast({
-        title: '请先启用玩具',
-        icon: 'none'
-      });
-      return;
-    }
+    // if (!item.enable) {
+    //   wx.showToast({
+    //     title: '请先启用玩具',
+    //     icon: 'none'
+    //   });
+    //   return;
+    // }
     app.globalData.deviceMapping = item
     console.log(app.globalData.deviceMapping)
-    wx.navigateTo({
-      url: '/pages/device_button/device_button',
-      success (res) {
-          console.log(res)
-      }
-    });
+    if (item.baseDeviceName ==  "逗猫车") {
+      wx.navigateTo({
+        url: '/pages/device_button/device_button',
+        success (res) {
+            console.log(res)
+        }
+      });
+    } else {
+      wx.navigateTo({
+        url: '/pages/toy_menjia/toy_menjia',
+        success (res) {
+            console.log(res)
+        }
+      });
+    }
   },
 })

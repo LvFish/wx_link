@@ -16,7 +16,7 @@
 
 
   <!-- 功能按钮区域 -->
-  <view class="function-buttons">
+  <!-- <view class="function-buttons">
     <view class="button-group">
       <view class="function-button" bindtap="goToFamily">
         <view class="button-icon">
@@ -28,15 +28,15 @@
         </view>
       </view>
     </view>
-  </view>
+  </view> -->
 
   <view class="function-buttons">
     <view class="button-group">
       <view class="function-button" bindtap="goToFamily">
-        <view class="button-icon">
+        <!-- <view class="button-icon">
           <image src="/images/ic_family.png" mode="aspectFit"></image>
-        </view>
-        <view class="button-text">功能A</view>
+        </view> -->
+        <view class="button-text">操作指引</view>
         <view class="button-arrow">
           <image src="/images/ic_arrow_right.png" mode="aspectFit"></image>
         </view>
@@ -44,11 +44,27 @@
     </view>
 
     <view class="button-group">
-      <view class="function-button" bindtap="goToMessage">
-        <view class="button-icon">
-          <image src="/images/ic_message.png" mode="aspectFit"></image>
+      <view class="function-button" bindtap="goToSuggest">
+        
+        <view class="button-text">建议与反馈</view>
+        <view class="button-arrow">
+          <image src="/images/ic_arrow_right.png" mode="aspectFit"></image>
         </view>
-        <view class="button-text">功能B</view>
+      </view>
+    </view>
+    <view class="button-group">
+      <view class="function-button" bindtap="goToPrivacy">
+       
+        <view class="button-text">隐私保护说明</view>
+        <view class="button-arrow">
+          <image src="/images/ic_arrow_right.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+    <view class="button-group">
+      <view class="function-button" bindtap="goToAboutUs">
+       
+        <view class="button-text">关于我们</view>
         <view class="button-arrow">
           <image src="/images/ic_arrow_right.png" mode="aspectFit"></image>
         </view>

@@ -12,7 +12,7 @@ Page({
       if (app.globalData.userInfo) {
         let that = this;
         let avatarUrl
-        if (app.globalData.userInfo.avatarUrl == "/f9f6f665-1e4c-44e7-9634-5bbde432ad6e.jpg" && app.globalData.userInfo.nickName == '默认用户') {
+        if (app.globalData.userInfo.avatarUrl == "/f9f6f665-1e4c-44e7-9634-5bbde432ad6e.jpg" && (app.globalData.userInfo.nickName == '默认用户'||app.globalData.userInfo.nickName == '铲屎官momo')) {
           avatarUrl = defaultAvatarUrl
         } else {
           avatarUrl = `${app.globalData.baseUrl}/images${app.globalData.userInfo.avatarUrl}`
@@ -35,7 +35,7 @@ Page({
       if (app.globalData.isLogin) {
         console.log('init info')
         let avatarUrl
-        if (app.globalData.userInfo.avatarUrl == "/f9f6f665-1e4c-44e7-9634-5bbde432ad6e.jpg" && app.globalData.userInfo.nickName == '默认用户') {
+        if (app.globalData.userInfo.avatarUrl == "/f9f6f665-1e4c-44e7-9634-5bbde432ad6e.jpg" && (app.globalData.userInfo.nickName == '默认用户'||app.globalData.userInfo.nickName == '铲屎官momo')) {
           avatarUrl = defaultAvatarUrl
         } else {
           avatarUrl = `${app.globalData.baseUrl}/images${app.globalData.userInfo.avatarUrl}`
@@ -135,5 +135,20 @@ Page({
             }
         }
       });
+    },
+    goToPrivacy() {
+      wx.navigateTo({
+        url: '/pages/personal/privacy/privacy',
+      })
+    },
+    goToAboutUs() {
+      wx.navigateTo({
+        url: '/pages/personal/about_us/about_us',
+      })
+    },
+    goToSuggest() {
+      wx.navigateTo({
+        url: '/pages/personal/suggest/suggest',
+      })
     },
 });

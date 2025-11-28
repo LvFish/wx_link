@@ -31,30 +31,33 @@
       <image src="/images/cat.png" class="repeater-icon" />
     </view>
     <view class="toy-item" wx:if="{{toyList.length == 0}}">
-      <text class="toy-title" >快添加中继器和宠物一起玩耍吧！</text>
+      <text class="toy-title" >快添加box和宠物一起玩耍吧！</text>
       <view class="add-repeater-btn2" bindtap="goToAddRepeater">去添加</view>
     </view>
     <view class="toy-item" wx:for="{{toyList}}" wx:key="id" bindtap="onListClick"  data-index="{{index}}">
-        <text class="toy-title {{item.enable ? '': 'gray-text'}}">{{item.baseDeviceName}}</text>
-      <switch 
+        <text class="toy-title">{{item.baseDeviceName}}</text>
+      <!-- <switch 
       checked="{{item.enable}}" 
       color="#4CD964" 
       catchtap="onSwitchChange"
       data-index="{{index}}"
-      />
+      /> -->
     </view>
+    <!-- <view class="toy-item" > -->
+    <text class="toy-tips">更多奇妙玩具，敬请期待 (๑•̀ㅂ•́) ✧</text>
+    <!-- </view> -->
   </view>
 
   <!-- 底部删除按钮 -->
   <view class="delete-btn" wx:if="{{toyList.length != 0}}" bindtap="onDeleteRepeater">
-    删除中继器
+    解绑box
   </view>
 
   <!-- 弹窗切换中继器 -->
   <view class="repeater-modal {{isModalShow ? 'show' : ''}}" bindtap="closeModal">
     <view class="modal-content">
       <view class="modal-header">
-        <text class="modal-title">选择中继器</text>
+        <text class="modal-title">切换box</text>
         <image src="/images/close.png" class="close-icon" bindtap="closeModal" />
       </view>
       
@@ -74,7 +77,7 @@
       
       <!-- 弹窗正下方添加按钮 -->
       <view class="add-repeater-btn" bindtap="goToAddRepeater">
-        <text>添加中继器</text>
+        <text>添加box</text>
       </view>
     </view>
   </view>

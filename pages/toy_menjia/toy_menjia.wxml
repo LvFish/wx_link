@@ -1,0 +1,40 @@
+<!--pages/toy_menjia/toy_menjia.wxml-->
+<view class="remote-container">
+   <!-- 屏幕区域 -->
+   <view class="screen">
+    请把视频悬浮框/画中画模块放在虚线内，以便更好的操作
+   </view>
+
+
+   
+  <!-- 方向按键区域 -->
+  <view class="buttons-container">
+
+    <view class="row row-middle">
+      <view class="btn2 module" data-name ="开" bindtap="clickButton">
+        <button>开</button>
+      </view>
+      <view class="btn2 module" data-name ="关" bindtap="clickButton">
+        <button>关</button>
+      </view>
+    </view>
+
+    <view class="row row-middle">
+      <view class="btn2 module" data-name ="高速" bindtap="clickButton">
+        <button>高速</button>
+      </view>
+      <view class="btn2 module" data-name ="中速" bindtap="clickButton">
+        <button>中速</button>
+      </view>
+    </view>
+
+    <view class="row row-middle">
+      <view class="btn2 module" data-name ="慢速" bindtap="clickButton">
+        <button>慢速</button>
+      </view>
+      <view class="btn2 module" data-name ="收绳" bindtap="clickButton">
+        <button>收绳</button>
+      </view>
+    </view>
+  </view>
+</view>

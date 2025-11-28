@@ -1,0 +1,58 @@
+<!--pages/personal/suggest/suggest.wxml-->
+<view class="suggest-container">
+  <view class="header">
+    <text class="title">意见反馈</text>
+  </view>
+  
+  <view class="content">
+    <!-- 第一部分：产品建议 -->
+    <view class="section">
+      <text class="section-title">产品建议</text>
+      <textarea 
+        class="feedback-input" 
+        placeholder="请填写10个字以上的问题描述以便我们提供更好的帮助"
+        maxlength="200"
+        bindinput="onInputChange"
+        value="{{feedbackText}}"
+      ></textarea>
+      <view class="char-count">{{charCount}}/200</view>
+    </view>
+    
+    <!-- 第二部分：相关截图 -->
+    <view class="section">
+      <text class="section-title">相关截图（选填）</text>
+      <text class="section-description">相关截图（选填）（{{imageCount}}/4）</text>
+      <view class="image-upload-container">
+        <view class="image-upload-item" wx:for="{{imageList}}" wx:key="index">
+          <image class="uploaded-image" src="{{item}}" mode="aspectFill"></image>
+          <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">×</view>
+        </view>
+        <view class="image-upload-btn" wx:if="{{imageCount < 4}}" bindtap="chooseImage">
+          <text class="plus-icon">+</text>
+          <text class="upload-text">上传图片</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 第三部分：联系方式 -->
+    <view class="section">
+      <text class="section-title">联系方式</text>
+      <input 
+        class="contact-input" 
+        placeholder="邮箱/手机号"
+        bindinput="onContactChange"
+        value="{{contactInfo}}"
+      />
+    </view>
+    
+    <!-- 第四部分：提交按钮 -->
+    <view class="section">
+      <view 
+        class="submit-btn {{!feedbackText || charCount < 10 ? 'disabled' : ''}}" 
+        bindtap="submitFeedback"
+      >
+        <text>提交</text>
+      </view>
+    </view>
+  </view>
+</view>

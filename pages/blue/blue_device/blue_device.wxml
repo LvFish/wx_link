@@ -1,7 +1,17 @@
-<!--pages/smartConfig/smartConfig.wxml-->
+<!--pages/blue/blue_device/blue_device.wxml-->
 <view class="container">
+  <!-- <view class="demo-title">Blufi配网</view>
+  <view class="demo-desc">基于微信小程序和Esp Blufi实现 WiFi配网</view>
+  <view title="" desc="WiFi配网信息">
+    <input label="WiFi SSID" placeholder="请输入WiFi SSID" bindchange="onSSIDInput" value="{{ssid}}"/>
+    <input label="WiFi 密码" placeholder="请输入WiFi 密码" bindchange="onPasswordInput" value="{{password}}"/>
+  </view>
+
+  <view class="button">
+    <t-button theme="primary" block bindtap="okBtnClick">开始配网</t-button>
+  </view> -->
+
   <!-- 上方空白区域，可根据需求调整高度 -->
-  
   <view class="top-empty">
     <view class="top-empty-content">
       <view class="instruction-item">
@@ -22,7 +32,7 @@
       </view>
       <view class="instruction-item">
         <text class="number">5.</text>
-        <text class="text">如果无法连接，可切换蓝牙配网方式进行连接。</text>
+        <text class="text">如果无法连接，可切换一键配网方式进行连接。</text>
       </view>
     </view>
   </view>
@@ -70,21 +80,12 @@
   <!-- <view class='input-btn'> -->
     <view 
       class="connect-btn {{!wifiInfo || !wifiInfo.ssid || !password ||!isChecked ? 'disabled' : ''}}" 
-      bindtap="startSmartConfig"
+      bindtap="okBtnClick"
     >
       连接
     </view>
-    <view
-      class="ap-btn" 
-      bindtap="changeAp"
-    >
-      切换蓝牙配网
-    </view>
-  
-  <!-- 连接按钮 -->
-  
 
-  <view class="repeater-modal {{isModalShow ? 'show' : ''}}" bindtap="closeModal">
+    <view class="repeater-modal {{isModalShow ? 'show' : ''}}" bindtap="closeModal">
     <view class="modal-content">
       <view class="modal-header">
         <text class="modal-title">选择Wi-Fi</text>
@@ -108,4 +109,5 @@
       </view> -->
     </view>
   </view>
+
 </view>

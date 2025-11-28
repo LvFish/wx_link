@@ -1,6 +1,13 @@
 {
   "pages": [
     "pages/new_device/new_device",
+    "pages/personal/suggest/suggest",
+    "pages/personal/about_us/about_us",
+    "pages/personal/privacy/privacy",
+    "pages/blue/blue_device/blue_device",
+    "pages/blue/blue_config/blue_config",
+    "pages/ap/ap_show/ap_show",
+    "pages/ap/ap_next_step/ap_next_step",
     "pages/profile/profile",
     "pages/setting/setting",
     "pages/smartConfig/smartConfig",
@@ -9,7 +16,9 @@
     "pages/detail/detail",
     "pages/register/register",
     "pages/device_detail/detail",
+    "pages/toy_menjia/toy_menjia",
     "pages/device_button/device_button"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -46,12 +55,7 @@
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
-  "plugins": {
-    "airkiss": {
-      "version": "1.1.2",
-      "provider": "wx610ea582556c983e"
-    }
-  },
+  "plugins": {},
   "backgroundFetch": {
     "enabled": true
   }

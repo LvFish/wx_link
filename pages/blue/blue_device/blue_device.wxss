@@ -1,0 +1,287 @@
+/* pages/blue/blue_device/blue_device.wxss */
+.page {
+    margin: 30rpx;
+}
+
+.button {
+    width: 600rpx;
+    margin: auto;
+    margin-top: 30rpx;
+    text-align: center;
+    align-items: center;
+}
+
+.container {
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* align-items: center; */
+    justify-content: flex-start;
+    padding: 20rpx;
+    background: linear-gradient(145.25deg, rgba(255, 242, 242, 1) 0%, rgba(232, 243, 255) 100%);
+    min-height: 100vh;
+    /* box-sizing: border-box; */
+}
+
+
+.top-empty {
+    width: 100%;
+    height: 700rpx;
+    background-color: #fff;
+    border-radius: 20rpx;
+    margin-bottom: 40rpx;
+  }
+  
+  .top-empty-content {
+    margin-top: 50rpx;
+    margin-left: 50rpx;
+    width: 600rpx;
+    text-align: left;
+  }
+  
+  .instruction-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20rpx;
+    line-height: 1.5;
+  }
+  
+  .number {
+    color: blue;
+    font-size: 32rpx;
+    font-weight: bold;
+    margin-right: 10rpx;
+    min-width: 40rpx;
+  }
+  
+  .text {
+    font-size: 32rpx;
+    flex: 1;
+  }
+  
+
+.input-group {
+    width: 100%;
+    margin-top: 100rpx;
+}
+
+.input-item {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    height: 80rpx;
+    margin-bottom: 60rpx;
+    margin-left: 10%;
+    padding: 0 20rpx;
+    box-sizing: border-box;
+    border-bottom: 1rpx solid rgba(207, 207, 207, 1);
+}
+
+.icon {
+    width: 40rpx;
+    height: 40rpx;
+    margin-right: 20rpx;
+}
+
+.input {
+    flex: 1;
+    height: 100%;
+    font-size: 28rpx;
+}
+
+.input-text {
+    flex: 1;
+    font-size: 28rpx;
+}
+
+.input-btn {
+    width: 100%;
+}
+
+.connect-btn {
+    width: 80%;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    background-color: rgba(191, 113, 34, 1);
+    color: rgba(97, 51, 5, 1);
+    font-size: 32rpx;
+    border-radius: 306rpx;
+    margin-top: 100rpx;
+}
+
+.connect-btn.disabled {
+    width: 80%;
+    background-color: rgba(229, 229, 229, 1);
+    color: #999;
+}
+
+
+button {
+    margin-top: 20px;
+}
+
+.result {
+    margin-top: 20px;
+    color: red;
+}
+
+
+/* 中继器切换弹窗 */
+.repeater-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 200rpx;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    z-index: 100;
+}
+
+.repeater-modal.show {
+    opacity: 1;
+    visibility: visible;
+    padding-top: 100rpx;
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 16rpx;
+    width: 90%;
+    max-width: 680rpx;
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30rpx;
+    border-bottom: 1rpx solid #f5f5f5;
+}
+
+.modal-title {
+    font-size: 32rpx;
+    font-weight: 500;
+    color: #333;
+}
+
+.close-icon {
+    width: 32rpx;
+    height: 32rpx;
+}
+
+.repeater-list {
+    padding: 20rpx 30rpx;
+}
+
+.repeater-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20rpx 0;
+    border-bottom: 1rpx solid #f5f5f5;
+}
+
+.repeater-item:last-child {
+    border-bottom: none;
+}
+
+.repeater-item.selected {
+    color: #409EFF;
+}
+
+.repeater-item-name {
+    font-size: 28rpx;
+    color: #333;
+}
+
+.repeater-item.selected .repeater-item-name {
+    color: #409EFF;
+}
+
+/* 弹窗下方添加按钮 */
+.select-wifi-btn {
+    position: absolute;
+    bottom: -40rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    background-color: #409EFF;
+    color: #fff;
+    border-radius: 40rpx;
+    font-size: 28rpx;
+    box-shadow: 0 4rpx 12rpx rgba(64, 158, 255, 0.3);
+    z-index: 10;
+}
+
+.ap-btn {
+    width: 40%;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    /* background-color: rgba(191, 113, 34, 1); */
+    color: blue;
+    font-size: 32rpx;
+    border-radius: 306rpx;
+    margin-top: 20rpx;
+}
+
+
+/* 隐藏原生radio的默认样式 */
+.radio-hidden {
+    display: none;
+  }
+  
+  /* 自定义方形框容器 */
+  .custom-radio {
+    display: flex;
+    align-items: center;
+    margin: 30rpx 20rpx;
+  }
+  
+  /* 方形单选框样式 */
+  .radio-square {
+    width: 36rpx;
+    height: 36rpx;
+    border: 2rpx solid #999; /* 未选中时边框 */
+    border-radius: 4rpx; /* 方形圆角（可选） */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15rpx;
+    background-color: white;
+  }
+  
+  /* 选中时的样式 */
+  .radio-checked {
+    background-color: #07c160; /* 选中时背景色 */
+    border-color: #07c160; /* 选中时边框色 */
+  }
+  
+  /* 对勾图标样式 */
+  .radio-checkmark {
+    color: white;
+    font-size: 24rpx;
+    font-weight: bold;
+  }
+  
+  /* 文字样式 */
+  .radio-text {
+    font-size: 28rpx;
+    color: blue;
+  }
+  
+  .radio-container {
+    margin-top: -60rpx;
+    margin-left: -180rpx;
+  }

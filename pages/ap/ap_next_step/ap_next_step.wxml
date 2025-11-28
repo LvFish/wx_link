@@ -1,0 +1,57 @@
+<!--pages/ap/ap_next_step/ap_next_step.wxml-->
+<view class="container">
+  <!-- 上方空白区域，可根据需求调整高度 -->
+  <view class="top-empty"></view>
+
+  <!-- Wi-Fi 名称输入框 -->
+  <view class='input-group'>
+    <view class="input-item">
+      <image class="icon" src="/images/wifi.png"></image>
+      <view class="input-text" bindtap="onSwitchWiFi">
+        <text>{{wifiInfo.ssid? wifiInfo.ssid:'请选择Wi-FI'}}</text>
+      </view>
+    </view>
+
+    <!-- Wi-Fi 密码输入框 -->
+    <view class="input-item">
+      <image class="icon" src="/images/pwd.png"></image>
+      <input 
+        class="input"
+        placeholder="请输入Wi-Fi密码" 
+        bindinput="onPasswordInput"
+      />
+    </view>
+  </view>
+  
+
+  <!-- <view class='input-btn'> -->
+    <view 
+      class="connect-btn {{!wifiInfo || !wifiInfo.ssid || !password  ? 'disabled' : ''}}" 
+      bindtap="startSmartConfig"
+    >
+      连接
+    </view>
+  
+  <!-- 连接按钮 -->
+  
+
+  <view class="repeater-modal {{isModalShow ? 'show' : ''}}" bindtap="closeModal">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">选择Wi-Fi</text>
+        <image src="/images/close.png" class="close-icon" bindtap="closeModal" />
+      </view>
+      
+      <view class="repeater-list">
+        <view class="repeater-item" 
+              wx:for="{{wifiList}}" 
+              wx:key="SSID" 
+              bindtap="switchWifi" 
+              data-id="{{item.SSID}}"
+        >
+          <text class="repeater-item-name">{{item.SSID}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

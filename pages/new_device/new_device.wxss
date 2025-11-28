@@ -77,6 +77,13 @@
   font-size: 28rpx;
   color: #333;
 }
+
+.toy-tips {
+  font-size: 28rpx;
+  color: #333;
+  margin-left: 10rpx;
+}
+
 .gray-text {
   color: #CCC; /* 禁用态文字颜色 */
 }

@@ -1,0 +1,33 @@
+<!--pages/personal/about_us/about_us.wxml-->
+<view class="about-container">
+  <view class="header">
+    <text class="title">关于我们</text>
+  </view>
+  
+  <view class="content">
+    <view class="section">
+      <text class="quote">「是几点钟方向，你才会收到暗号？」</text>
+      <text class="quote-sub">——当我的尾巴竖起，是直直指向你的天线。</text>
+    </view>
+    
+    <view class="section">
+      <text class="paragraph">PawsLink 致力于捕捉这份无声电波，创造连接—— 一个手机，一件玩具，即使相隔万里也能实时触碰彼此的信号，传递独属你与毛孩子的思念。</text>
+    </view>
+    
+    <view class="section">
+      <text class="paragraph">也许当你收到这封来自家的思念信时，火漆爪印上还带着细绒毛。而拆开这封信的你，只需指尖轻点，就能回应这份情感。</text>
+    </view>
+    
+    <view class="section">
+      <text class="paragraph">一份「云陪伴」，永远「不孤单」。</text>
+    </view>
+    
+    <view class="section">
+      <text class="slogan">—— PawsLink，让陪伴在线。</text>
+    </view>
+    
+    <view class="section contact-section">
+      <text class="contact-info">邮箱: feedback_pawslink@163.com</text>
+    </view>
+  </view>
+</view>

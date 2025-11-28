@@ -4,9 +4,17 @@ Page({
     data: {
         deviceMapping: {},
         list: [],
-        clickCounts: [],
+        clickCounts: [0,0,0,0,1,1],
         text: '数据拉取中',
         rpxRatio: 1,
+        currentUp: '/icon/up.png',
+        currentDown: '/icon/down.png',
+        currentLeft: '/icon/left.png',
+        currentRight: '/icon/right.png',
+        currentModel: '/icon/open.png',
+        currentLight: '/icon/open.png',
+        modelActive: true,
+        lightActive: true
     },
     onLoad () {
         const _this = this;
@@ -14,11 +22,17 @@ Page({
           title: app.globalData.deviceMapping.baseDeviceName
         });
         if (app.globalData.deviceMapping) {
-          const newArray = new Array(app.globalData.deviceMapping.buttons.length).fill(0);
+          const result = app.globalData.deviceMapping.buttons.map(button => {
+            const { name } = button;
+            // 检查name是否为“模式”或“灯光”（严格匹配，区分大小写）
+            return name === '模式' || name === '灯光' ? 1 : 0;
+          });
           _this.setData({
             deviceMapping: app.globalData.deviceMapping,
             list: app.globalData.deviceMapping.buttons,
-            clickCounts: newArray
+            clickCounts: result,
+            modelActive: true,
+            lightActive: true
           })
         } else {
           app.globalData.redirect = '/pages/device/device'
@@ -63,10 +77,35 @@ Page({
     },
     handleLight(){
       console.log('light')
+      let temp = this.data.currentLight
+      let lightActive = this.data.lightActive
+      lightActive = !lightActive
+      if (lightActive) {
+        temp = "/icon/open_active.png"
+      } else {
+        temp = "/icon/open.png"
+      }
+      this.setData({
+        currentLight: temp,
+        lightActive: lightActive,
+      })
       this.startClick('灯光')
     },
     handleModule(){
       console.log('module')
+      let temp = this.data.currentModel
+      let modelActive = this.data.modelActive
+      modelActive = !modelActive
+      if (modelActive) {
+        temp = "/icon/open_active.png"
+      } else {
+        temp = "/icon/open.png"
+      }
+      
+      this.setData({
+        currentModel: temp,
+        modelActive: modelActive,
+      })
       this.startClick('模式')
     },
     startClick(name) {
@@ -83,7 +122,7 @@ Page({
           });
           let item = arr[index]
           // 执行点击逻辑
-          let url = `${getApp().globalData.baseUrl}/device/${deviceMapping.deviceId}/base/${deviceMapping.mappingId}/click/${item.id}?clickCount=${clickCounts[index]}`
+          let url = `${getApp().globalData.baseUrl}/device/${deviceMapping.deviceId}/base/${deviceMapping.baseDeviceId}/click/${item.id}?clickCount=${clickCounts[index]}`
           wx.request({
             url: url,
             header: { 'content-type': 'application/json' },
@@ -182,5 +221,51 @@ Page({
       this.setData({
         isModalShow: false
       });
+    },
+
+    handleTouchStart(e) {
+      const params = e.currentTarget.dataset;
+      if (params) {
+        if (params.name == "left") {
+          this.setData({
+            currentLeft: '/icon/left_active.png'
+          });
+        } else if (params.name == "right") {
+          this.setData({
+            currentRight: '/icon/right_active.png'
+          });
+        } else if (params.name == "up") {
+          this.setData({
+            currentUp: '/icon/up_active.png'
+          });
+        } else if (params.name == "down") {
+          this.setData({
+            currentDown: '/icon/down_active.png'
+          });
+        }
+      }
+    
+    },
+    handleTouchEnd(e) {
+      const params = e.currentTarget.dataset;
+      if (params) {
+        if (params.name == "left") {
+          this.setData({
+            currentLeft: '/icon/left.png'
+          });
+        } else if (params.name == "right") {
+          this.setData({
+            currentRight: '/icon/right.png'
+          });
+        } else if (params.name == "up") {
+          this.setData({
+            currentUp: '/icon/up.png'
+          });
+        } else if (params.name == "down") {
+          this.setData({
+            currentDown: '/icon/down.png'
+          });
+        }
+      }
     }
 });

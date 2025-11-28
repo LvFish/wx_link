@@ -1,0 +1,52 @@
+/* pages/ap_show/ap_show.wxss */
+.container {
+  padding: 20rpx;
+}
+.title {
+  font-size: 32rpx;
+  margin-bottom: 30rpx;
+}
+.step-item {
+  margin-bottom: 40rpx;
+}
+.step-num {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-right: 10rpx;
+}
+.step-desc {
+  font-size: 28rpx;
+}
+.setting-btn {
+  background-color: #c8a97e;
+  color: #fff;
+  border-radius: 8rpx;
+  margin-top: 15rpx;
+}
+.wifi-list {
+  margin-top: 15rpx;
+}
+.wifi-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+.wifi-checkbox {
+  transform: scale(0.8);
+}
+.wifi-name {
+  font-size: 28rpx;
+  margin-left: 10rpx;
+}
+.next-btn {
+  margin-top: 50rpx;
+  background-color: #e5e5e5;
+  color: #999;
+}
+.next-btn[disabled] {
+  opacity: 0.6;
+}
+.next-btn:not([disabled]) {
+  background-color: #07c160;
+  color: #fff;
+}

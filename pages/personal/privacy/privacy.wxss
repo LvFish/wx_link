@@ -1,0 +1,85 @@
+/* pages/personal/privacy/privacy.wxss */
+.privacy-container {
+  min-height: 100vh;
+  background: linear-gradient(145.25deg, rgba(255, 242, 242, 1) 0%, rgba(232, 243, 255) 100%);
+  padding: 40rpx 30rpx;
+  box-sizing: border-box;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60rpx;
+  padding-top: 40rpx;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.content {
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 50rpx 40rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.08);
+}
+
+.section {
+  margin-bottom: 60rpx;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+  display: block;
+}
+
+.section-text {
+  font-size: 32rpx;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.info-list {
+  margin-left: 20rpx;
+}
+
+.info-item {
+  font-size: 32rpx;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 15rpx;
+  display: block;
+}
+
+.contact-info {
+  font-size: 32rpx;
+  color: #409EFF;
+  margin-top: 10rpx;
+  margin-bottom: 20rpx;
+  display: block;
+  font-weight: bold;
+}
+
+.footer {
+  border-top: 2rpx solid #f0f0f0;
+  padding-top: 40rpx;
+  margin-top: 40rpx;
+  text-align: center;
+}
+
+.update-date, .effective-date {
+  font-size: 28rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 10rpx;
+}

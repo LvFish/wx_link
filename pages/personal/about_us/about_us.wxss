@@ -1,0 +1,87 @@
+/* pages/personal/about_us/about_us.wxss */
+.about-container {
+  min-height: 100vh;
+  background: linear-gradient(145.25deg, rgba(255, 242, 242, 1) 0%, rgba(232, 243, 255) 100%);
+  padding: 40rpx 30rpx;
+  box-sizing: border-box;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60rpx;
+  padding-top: 40rpx;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.content {
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 50rpx 40rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.08);
+}
+
+.section {
+  margin-bottom: 50rpx;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.quote {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 20rpx;
+  display: block;
+  text-align: center;
+  font-style: italic;
+}
+
+.quote-sub {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+  display: block;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.paragraph {
+  font-size: 32rpx;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 30rpx;
+  display: block;
+  text-align: justify;
+}
+
+.slogan {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  line-height: 1.8;
+  display: block;
+  text-align: center;
+  font-style: italic;
+  margin-top: 20rpx;
+}
+
+.contact-section {
+  border-top: 2rpx solid #f0f0f0;
+  padding-top: 40rpx;
+  margin-top: 40rpx;
+  text-align: center;
+}
+
+.contact-info {
+  font-size: 32rpx;
+  color: #409EFF;
+  font-weight: bold;
+}

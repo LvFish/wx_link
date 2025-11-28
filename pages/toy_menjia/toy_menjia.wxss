@@ -1,3 +1,4 @@
+/* pages/toy_menjia/toy_menjia.wxss */
 .remote-container {
   display: flex;
   flex-direction: column;
@@ -31,7 +32,6 @@
 }
 
 
-
 /* 按键容器 */
 .buttons-container {
   width: 100%;
@@ -47,17 +47,11 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 20rpx; /* 减少行间距 */
+  margin-bottom: 40rpx;
 }
 
 .row-middle {
-  justify-content: center; /* 改为居中布局 */
-  gap: 100rpx; /* 左右按钮间距100rpx */
-  margin-top: -50rpx;
-}
-
-.row-top {
-  margin-top: 130rpx;
+  justify-content: space-between; /* 左右按钮分别居左和居右 */
 }
 
 .row-extend {
@@ -66,7 +60,6 @@
 
 .row-bottom {
   margin-bottom: 0; /* 最后一行没有底部间距 */
-  margin-top: -50rpx;
 }
 
 /* 单个按键样式 */
@@ -77,15 +70,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.1); */
   transition: all 0.2s;
 }
-
 
 .btn:active {
   transform: scale(0.8);
   /* box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.12); */
 }
+
 
 .btn image {
   width: 140rpx;
@@ -93,41 +85,29 @@
 }
 
 .btn2 {
-  width: 40%;
-  height: 100rpx;
+  width: 100%;
+  height: 120rpx;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.1); */
   transition: all 0.2s;
 }
 
-.btn2:active {
+.btn2 button:active {
   transform: scale(0.8);
   box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.12);
 }
 
 .btn2 button {
-  width: 200rpx;
-  height: 100rpx;
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
+  width: 240rpx;
+  height: 120rpx;
+  line-height: 80rpx; 
+  background: white;
   align-items: center;
-  /* padding: 20rpx 20rpx 20rpx 20rpx; */
-  font-size: 36rpx;
+  padding: 20rpx 20rpx 20rpx 20rpx;
+  font-size: 42rpx;
   font-weight: 400;
   text-align: center;
   color: black;
-}
-
-.btn2 button.active {
-  color: #efb336;
-}
-
-.btn2 image {
-  width: 48rpx;
-  height: 48rpx;
-  margin-right: 20rpx;
 }
