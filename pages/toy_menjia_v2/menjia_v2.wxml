@@ -1,0 +1,38 @@
+<!--pages/toy_menjia_v2/menjia_v2.wxml-->
+<view class="remote-container">
+  <!-- 屏幕区域 -->
+  <view class="screen">
+    请把视频悬浮框/画中画模块放在虚线内，以便更好的操作
+  </view>
+
+  <!-- 速度控制区域 -->
+  <view class="speed-section">
+    <view class="speed-header">
+      <text class="speed-label">速度：</text>
+    </view>
+    <view class="speed-controls">
+      <button class="speed-btn minus-btn" bindtap="onMinusSpeed">-</button>
+      <text class="speed-text">{{speedText}}</text>
+      <button class="speed-btn plus-btn" bindtap="onPlusSpeed">+</button>
+    </view>
+    
+    <!-- 风速进度条 -->
+    <view class="wind-speed-bar">
+      <view class="wind-speed-progress" style="width: {{windSpeedProgress}}%;">
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部按钮区域 -->
+  <view class="bottom-buttons">
+    <button class="control-btn power-on-btn" bindtap="onPowerOn">开机</button>
+    <button class="control-btn standby-btn" bindtap="onStandby">待机</button>
+    <button class="control-btn retract-btn" bindtap="onRetract">收绳</button>
+    <button class="control-btn power-btn" bindtap="onPowerOff">省电关机</button>
+  </view>
+
+  <!-- 底部提示文字 -->
+  <view class="bottom-tip">
+    <text class="tip-text">如果点击过【省电关机】后，未手动打开，那么玩具无法远程控制，请确认手动打开玩具本身的开关。</text>
+  </view>
+</view>

@@ -151,4 +151,39 @@ Page({
         url: '/pages/personal/suggest/suggest',
       })
     },
+    updateDevice() {
+      wx.showLoading({
+        title: '更新中',
+      });
+      // 发送更新设备的请求
+      wx.request({
+        url: `${app.globalData.baseUrl}/api/device/update`,
+        header: { 'content-type': 'application/json' },
+        method: 'POST',
+        success(res) {
+            if (res.data.code == 200) {
+              wx.showToast({
+                title: '设备更新成功',
+                icon: 'success'
+              });
+            } else {
+              wx.showModal({
+                title: '更新失败',
+                content: res.data.msg || '设备更新失败，请重试',
+                showCancel: false
+              });
+            }
+        },
+        fail(err) {
+          wx.showModal({
+            title: '更新失败',
+            content: '网络错误，请检查网络连接后重试',
+            showCancel: false
+          });
+        },
+        complete() {
+          wx.hideLoading();
+        }
+      });
+    },
 });

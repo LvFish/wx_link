@@ -12,10 +12,13 @@
 
     <view class="row row-middle">
       <view class="btn2 module" data-name ="开" bindtap="clickButton">
-        <button>开</button>
+        <button>开机</button>
       </view>
       <view class="btn2 module" data-name ="关" bindtap="clickButton">
-        <button>关</button>
+        <button>待机</button>
+      </view>
+      <view class="btn2 module" data-name ="关机" bindtap="clickButton">
+        <button>省电关机</button>
       </view>
     </view>
 

@@ -21,10 +21,10 @@ Page({
   },
 
   onShow() {
-    this.onLoad();
+    this.onLoad1();
   },
 
-  async onLoad(options) {
+  async onLoad1(options) {
     const _this = this;
     console.log('openid',app.globalData.openid)
     if (app.globalData.openid == null) {
@@ -111,6 +111,10 @@ Page({
               if (res.data.data.length > 0) {
                 const filteredData = res.data.data.filter(item => {
                   // 额外判断item是否存在name属性，避免undefined报错
+                  // console.log('filter', item)
+                  if (item.baseDeviceName == "门夹") {
+                    item.baseDeviceName = "门夹跳跳鼠"
+                  }
                   return item;
                 });
                 _this.setData({ 
@@ -163,6 +167,8 @@ Page({
                   currentDevice: res.data.data[0]
                 });
                 _this.getToyList();
+                // 调用检查设备版本方法
+                _this.checkDeviceVersion();
               } else {
                 _this.setData({ 
                   list: [],
@@ -199,6 +205,170 @@ Page({
       });
       // start load
     }
+  },
+
+  // 检查设备版本
+  checkDeviceVersion() {
+    // 检查是否已经检查过设备版本，小程序每次启动只检查一次
+    if (app.globalData.hasCheckedDeviceVersion) {
+      console.log('小程序已启动，设备版本检查已触发过一次');
+      return;
+    }
+    
+    const openId = app.globalData.openid;
+    const currentDevice = this.data.currentDevice;
+    
+    if (!openId || !currentDevice || !currentDevice.mac) {
+      console.log('缺少必要参数，无法检查设备版本');
+      return;
+    }
+    
+    const mac = currentDevice.mac;
+    const _this = this;
+    // 远程调用检查设备版本接口
+    wx.request({
+      url: `${app.globalData.baseUrl}/api/auth/${openId}/mac/${mac}/ota_check`,
+      method: 'POST',
+      header: { 'content-type': 'application/json' },
+      data: {},
+      success(res) {
+        // 无论是否需要更新，都标记为已检查
+        app.globalData.hasCheckedDeviceVersion = true;
+        
+        if (res.data.code === 200) {
+          const needUpdate = res.data.data; // 假设返回值是布尔值，表示是否需要更新
+          if (needUpdate) {
+            // 需要更新，弹窗询问用户
+            wx.showModal({
+              title: '设备更新',
+              content: '检测到设备有新版本，是否更新？',
+              success(res) {
+                if (res.confirm) {
+                  console.log('用户同意更新设备');
+                  // 调用设备更新方法
+                  _this.updateDevice(openId, mac);
+                } else if (res.cancel) {
+                  console.log('用户拒绝更新设备');
+                }
+              }
+            });
+          }
+        } else {
+          console.error('检查设备版本失败:', res.data.msg);
+        }
+      },
+      fail(err) {
+        // 请求失败，也标记为已检查，避免重复请求
+        app.globalData.hasCheckedDeviceVersion = true;
+        console.error('检查设备版本请求失败:', err.errMsg);
+      }
+    });
+  },
+
+  // 设备更新方法
+  updateDevice(openId, mac) {
+    const _this = this;
+    // 发起更新请求
+    wx.request({
+      url: `${app.globalData.baseUrl}/api/auth/${openId}/mac/${mac}/device_ota`,
+      method: 'POST',
+      header: { 'content-type': 'application/json' },
+      data: {},
+      success(res) {
+        if (res.data.code === 200) {
+          // 更新请求成功，显示进度条
+          _this.showUpdateProgress(openId, mac);
+        } else {
+          wx.showModal({
+            title: '更新失败',
+            content: res.data.msg,
+            showCancel: false
+          });
+        }
+      },
+      fail(err) {
+        wx.showModal({
+          title: '更新失败',
+          content: '发起更新请求失败，请重试',
+          showCancel: false
+        });
+      }
+    });
+  },
+
+  // 显示更新进度条
+  showUpdateProgress(openId, mac) {
+    const _this = this;
+    let progress = 0;
+    let progressTimer = null;
+    let checkTimer = null;
+    let totalUpdateTime = 0;
+    const maxUpdateTime = 5 * 60 * 1000; // 5分钟超时
+    const defaultUpdateTime = 2 * 60 * 1000; // 默认2分钟更新时间
+    const progressStep = 99 / (defaultUpdateTime / 1000); // 每秒进度增长值
+    
+    // 显示进度条弹窗
+    wx.showLoading({
+      title: '更新中...',
+      mask: true
+    });
+    
+    // 模拟进度条增长
+    progressTimer = setInterval(() => {
+      totalUpdateTime += 1000;
+      // 如果进度未到99%，继续增长
+      if (progress < 99) {
+        progress += progressStep;
+        if (progress > 99) progress = 99;
+      }
+      
+      // 更新进度条显示
+      wx.showLoading({
+        title: `更新中... ${Math.floor(progress)}%`,
+        mask: true
+      });
+      
+      // 检查是否超时
+      if (totalUpdateTime > maxUpdateTime) {
+        clearInterval(progressTimer);
+        clearInterval(checkTimer);
+        wx.hideLoading();
+        wx.showModal({
+          title: '更新失败',
+          content: '更新超时，请重试',
+          showCancel: false
+        });
+      }
+    }, 1000);
+    
+    // 并发检查更新结果
+    checkTimer = setInterval(() => {
+      wx.request({
+        url: `${app.globalData.baseUrl}/api/auth/${openId}/mac/${mac}/check_ota_result`,
+        method: 'POST',
+        header: { 'content-type': 'application/json' },
+        data: {},
+        success(res) {
+          if (res.data.code === 200) {
+            const isCompleted = res.data.data;
+            if (isCompleted) {
+              // 更新完成
+              clearInterval(progressTimer);
+              clearInterval(checkTimer);
+              wx.hideLoading();
+              wx.showModal({
+                title: '更新完成',
+                content: '设备更新已完成',
+                showCancel: false
+              });
+            }
+          }
+        },
+        fail(err) {
+          console.error('检查更新结果失败:', err.errMsg);
+        }
+      });
+    }, 5000); // 每5秒检查一次更新结果
   },
 
   // 开关状态变化
@@ -372,6 +542,8 @@ Page({
         isModalShow: false
       });
       this.getToyList();
+      // 调用检查设备版本方法
+      this.checkDeviceVersion();
     }
   },
 
@@ -442,7 +614,7 @@ Page({
       });
     } else {
       wx.navigateTo({
-        url: '/pages/toy_menjia/toy_menjia',
+        url: '/pages/toy_menjia_v2/menjia_v2',
         success (res) {
             console.log(res)
         }

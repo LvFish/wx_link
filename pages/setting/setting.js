@@ -20,7 +20,7 @@ Page({
     const userInfo = app.globalData.userInfo;
     this.setData({
       userNickName: userInfo.nickName,
-      avatarUrl: `${app.globalData.baseUrl}/images${userInfo.avatarUrl}`,
+      avatarUrl: `${userInfo.avatarUrl}`,
       openId: userInfo.openid,
     })
   },
@@ -167,7 +167,7 @@ Page({
         success: res => {
           // resolve('data:image/' + type.toLocaleLowerCase() + ';base64,' + res.data)
           resolve(res.data)
-          if (r.data.code == 200) {
+          if (res.data.code == 200) {
             this.setData({
               avatarUrl:`${app.globalData.baseUrl}/images${res.data.data}`,
             })

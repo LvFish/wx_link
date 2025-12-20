@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/new_device/new_device",
+    "pages/toy_menjia_v2/menjia_v2",
     "pages/personal/suggest/suggest",
     "pages/personal/about_us/about_us",
     "pages/personal/privacy/privacy",
@@ -18,7 +19,6 @@
     "pages/device_detail/detail",
     "pages/toy_menjia/toy_menjia",
     "pages/device_button/device_button"
-    
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -63,7 +63,6 @@
     </view>
     <view class="button-group">
       <view class="function-button" bindtap="goToAboutUs">
-       
         <view class="button-text">关于我们</view>
         <view class="button-arrow">
           <image src="/images/ic_arrow_right.png" mode="aspectFit"></image>
@@ -71,39 +70,4 @@
       </view>
     </view>
   </view>
-  
-
-  <!-- 快捷功能区域 -->
-  <!-- <view class="quick-functions">
-    <view class="section-title">快捷功能</view>
-    <view class="function-grid">
-      <view class="function-item" bindtap="goToSettings">
-        <view class="function-icon">
-          <image src="/images/ic_settings.png" mode="aspectFit"></image>
-        </view>
-        <view class="function-text">设置</view>
-      </view>
-      
-      <view class="function-item" bindtap="goToFavorites">
-        <view class="function-icon">
-          <image src="/images/ic_favorites.png" mode="aspectFit"></image>
-        </view>
-        <view class="function-text">收藏</view>
-      </view>
-      
-      <view class="function-item" bindtap="goToOrder">
-        <view class="function-icon">
-          <image src="/images/ic_order.png" mode="aspectFit"></image>
-        </view>
-        <view class="function-text">订单</view>
-      </view>
-      
-      <view class="function-item" bindtap="goToProfile">
-        <view class="function-icon">
-          <image src="/images/ic_profile.png" mode="aspectFit"></image>
-        </view>
-        <view class="function-text">资料</view>
-      </view>
-    </view>
-  </view> -->
 </view>
