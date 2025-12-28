@@ -12,7 +12,8 @@ App({
         longitude: 113.324520
     },
     redirect: null,
-    isLogin : false
+    isLogin : false,
+    hasCheckedDeviceVersion: []
   },
 
   onLaunch() {

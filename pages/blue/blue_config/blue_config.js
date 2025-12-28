@@ -12,8 +12,11 @@ Page({
 
     onLoad: function () {
         _this = this;
+        console.log("start blufi init");
         blufi.init();
+        console.log("start blufi listenDeviceMsgEvent");
         blufi.listenDeviceMsgEvent(this.deviceMsgEventCallBack);
+        console.log("start blufi startDiscoverBle");
         blufi.startDiscoverBle()
     },
     
@@ -56,7 +59,9 @@ Page({
                 }
                 break;
             case blufi.BLUFI_TYPE.TYPE_GET_DEVICE_LISTS_START:
+              console.log("options", options)
                 if (!options.result) {
+                  
                     logger.info("蓝牙未开启 fail =》", options)
                     wx.showToast({
                         title: '蓝牙未开启',

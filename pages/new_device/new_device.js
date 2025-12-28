@@ -50,7 +50,7 @@ Page({
   },
 
   onReloadLogin() {
-    this.onLoad();
+    this.onLoad1();
   },
 
   addMapping(deviceId, toyId) {
@@ -209,12 +209,6 @@ Page({
 
   // 检查设备版本
   checkDeviceVersion() {
-    // 检查是否已经检查过设备版本，小程序每次启动只检查一次
-    if (app.globalData.hasCheckedDeviceVersion) {
-      console.log('小程序已启动，设备版本检查已触发过一次');
-      return;
-    }
-    
     const openId = app.globalData.openid;
     const currentDevice = this.data.currentDevice;
     
@@ -224,6 +218,12 @@ Page({
     }
     
     const mac = currentDevice.mac;
+    // 检查是否已经检查过该mac地址的设备版本
+    if (app.globalData.hasCheckedDeviceVersion[mac]) {
+      console.log(`mac地址 ${mac} 已检查过设备版本`);
+      return;
+    }
+    
     const _this = this;
     // 远程调用检查设备版本接口
     wx.request({
@@ -232,8 +232,8 @@ Page({
       header: { 'content-type': 'application/json' },
       data: {},
       success(res) {
-        // 无论是否需要更新，都标记为已检查
-        app.globalData.hasCheckedDeviceVersion = true;
+        // 无论是否需要更新，都标记该mac地址为已检查
+        app.globalData.hasCheckedDeviceVersion[mac] = true;
         
         if (res.data.code === 200) {
           const needUpdate = res.data.data; // 假设返回值是布尔值，表示是否需要更新
@@ -258,8 +258,8 @@ Page({
         }
       },
       fail(err) {
-        // 请求失败，也标记为已检查，避免重复请求
-        app.globalData.hasCheckedDeviceVersion = true;
+        // 请求失败，也标记该mac地址为已检查，避免重复请求
+        app.globalData.hasCheckedDeviceVersion[mac] = true;
         console.error('检查设备版本请求失败:', err.errMsg);
       }
     });
@@ -303,8 +303,8 @@ Page({
     let progressTimer = null;
     let checkTimer = null;
     let totalUpdateTime = 0;
-    const maxUpdateTime = 5 * 60 * 1000; // 5分钟超时
-    const defaultUpdateTime = 2 * 60 * 1000; // 默认2分钟更新时间
+    const maxUpdateTime = 3 * 60 * 1000; // 3分钟超时
+    const defaultUpdateTime =  90 * 1000; // 默认90s更新时间
     const progressStep = 99 / (defaultUpdateTime / 1000); // 每秒进度增长值
     
     // 显示进度条弹窗
@@ -577,7 +577,7 @@ Page({
             success(res) {
               if (res.data.code == 200) {
                 wx.showToast({ title: '删除成功', icon: 'success' });
-                that.onLoad();
+                that.onLoad1();
               } else {
                 wx.showToast({ title: '删除失败', icon: 'fail' });
               }

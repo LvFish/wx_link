@@ -303,7 +303,9 @@ function writeDeviceEnd(deviceId, serviceId, characteristicId) {
 }
 
 function init() {
+  console.log('start init')
   wx.onBLEConnectionStateChange(function (res) {
+    console.log('init result: ', res)
     notifyDeviceMsgEvent({
       'type': BLUFI_TYPE.TYPE_STATUS_CONNECTED,
       'result': res.connected,
@@ -330,6 +332,7 @@ function notifyDeviceMsgEvent(options) {
 }
 
 function listenDeviceMsgEvent(funtion) {
+  console.log('start listenDeviceMsgEvent')
   onfire.on("deviceMsg", funtion)
 }
 
@@ -339,6 +342,7 @@ function unListenDeviceMsgEvent() {
 
 function startDiscoverBle() {
   //第一步检查蓝牙适配器是否可用
+  console.log("start startDiscoverBle()")
   wx.onBluetoothAdapterStateChange(function (res) {
     if (!res.available) {}
   });
@@ -347,6 +351,7 @@ function startDiscoverBle() {
     complete: function (res) {
       wx.openBluetoothAdapter({
         success: function (res) {
+          console.log("wx.getBluetoothAdapterState")
           wx.getBluetoothAdapterState({
             success: function (res) {
               wx.stopBluetoothDevicesDiscovery({
@@ -426,6 +431,7 @@ function startDiscoverBle() {
                   });
                 },
                 fail: function (res) {
+                  console.log("fail stopBluetoothDevicesDiscovery res:", res)
                   notifyDeviceMsgEvent({
                     'type': BLUFI_TYPE.TYPE_GET_DEVICE_LISTS_START,
                     'result': false,

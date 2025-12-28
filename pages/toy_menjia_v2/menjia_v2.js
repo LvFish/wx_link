@@ -216,7 +216,7 @@ Page({
       windSpeedProgress: 66
     });
     wx.showToast({
-      title: '已开机',
+      title: '已启动',
       icon: 'success'
     });
   },
