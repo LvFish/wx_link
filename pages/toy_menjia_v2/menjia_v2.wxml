@@ -27,7 +27,7 @@
   <view class="bottom-buttons">
     <button class="control-btn power-on-btn" bindtap="onPowerOn">启动</button>
     <button class="control-btn standby-btn" bindtap="onStandby">待机</button>
-    <button class="control-btn retract-btn" bindtap="onRetract">收绳</button>
+    <button class="control-btn retract-btn" bindtap="onRetract">提绳</button>
     <button class="control-btn power-btn" bindtap="onPowerOff">省电关机</button>
   </view>
 

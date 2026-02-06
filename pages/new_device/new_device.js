@@ -17,7 +17,8 @@ Page({
     toys: [
       { id: 1, name: '玩具1', disabled: false }, // 启用态
       { id: 2, name: '玩具2', disabled: true }  // 禁用态
-    ]
+    ],
+    lastTapTime: 0 // 记录上次点击时间
   },
 
   onShow() {
@@ -621,4 +622,46 @@ Page({
       });
     }
   },
+
+  // 双击复制MAC地址
+  onCatTap() {
+    const currentTime = Date.now();
+    const lastTapTime = this.data.lastTapTime;
+    const tapInterval = currentTime - lastTapTime;
+
+    // 判断是否为双击（两次点击间隔小于300ms）
+    if (tapInterval < 300 && tapInterval > 0) {
+      const currentDevice = this.data.currentDevice;
+      if (currentDevice && currentDevice.mac) {
+        // 将MAC地址转换为大写
+        const macAddress = currentDevice.mac.toUpperCase();
+        wx.setClipboardData({
+          data: macAddress,
+          success: () => {
+            wx.showToast({
+              title: 'MAC地址已复制',
+              icon: 'success',
+              duration: 2000
+            });
+          },
+          fail: () => {
+            wx.showToast({
+              title: '复制失败',
+              icon: 'none'
+            });
+          }
+        });
+      } else {
+        wx.showToast({
+          title: '暂无MAC地址',
+          icon: 'none'
+        });
+      }
+    }
+
+    // 更新上次点击时间
+    this.setData({
+      lastTapTime: currentTime
+    });
+  }
 })

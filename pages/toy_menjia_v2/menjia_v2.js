@@ -239,7 +239,7 @@ Page({
   onRetract: function() {
     this.startClick('收绳');
     wx.showToast({
-      title: '收绳功能已启动',
+      title: '提绳功能已启动',
       icon: 'success'
     });
   },

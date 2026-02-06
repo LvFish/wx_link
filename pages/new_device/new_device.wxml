@@ -28,7 +28,7 @@
   <!-- 玩具开关列表 -->
   <view class="toy-list">
     <view class="toy-cat">
-      <image src="/images/cat.png" class="repeater-icon" />
+      <image src="/images/cat.png" class="repeater-icon" bindtap="onCatTap" />
     </view>
     <view class="toy-item" wx:if="{{toyList.length == 0}}">
       <text class="toy-title" >快添加box和宠物一起玩耍吧！</text>

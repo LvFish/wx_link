@@ -35,8 +35,8 @@
       <view class="btn2 module" data-name ="慢速" bindtap="clickButton">
         <button>慢速</button>
       </view>
-      <view class="btn2 module" data-name ="收绳" bindtap="clickButton">
-        <button>收绳</button>
+      <view class="btn2 module" data-name ="提绳" bindtap="clickButton">
+        <button>提绳</button>
       </view>
     </view>
   </view>
